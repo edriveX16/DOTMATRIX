@@ -15,12 +15,5 @@ requires a 65C02S CPU: PRG makes use of smbX, rmbX, bbsX, bbrX etc. commands
 
 works with ROM #R47 (other ROM versions untested)
 
-
-Up to now (14th July 24) a ready to use binary (DOTMAT9.PRG)
-
-and the complete source code have been uploaded.
-
 Some documentation will be added over time, please be patient.
-
-
 
