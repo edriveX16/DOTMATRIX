@@ -219,9 +219,13 @@ lower4:
     ;
 ;=====================================================================
 .macro create_pattern_tile
-    lda pb_ul
+    ldy #$00
+    lda (ZP_PTR_2),y    ; read from pattern look up table
+    sta pb_ul           ; pattern def byte upper left
     jsr upper4
-    lda pb_ur
+    iny
+    lda (ZP_PTR_2),y
+    sta pb_ur
     jsr upper4
     lda pb_ul
     jsr upper4
@@ -237,9 +241,14 @@ lower4:
     lda pb_ur
     jsr lower4
 ; worte 4 pix lines
-    lda pb_ll
+;
+    iny
+    lda (ZP_PTR_2),y
+    sta pb_ll
     jsr upper4
-    lda pb_lr
+    iny
+    lda (ZP_PTR_2),y
+    sta pb_lr           ; pattern def byte lower right
     jsr upper4
     lda pb_ll
     jsr upper4
@@ -256,21 +265,6 @@ lower4:
     jsr lower4
 ; all 8 pix lines written
 .endmacro
-;=================================================================
-get_patternbytes:
-    lda (ZP_PTR_2),y    ; read from pattern look up table
-    sta pb_ul           ; pattern def byte upper left
-    iny
-    lda (ZP_PTR_2),y
-    sta pb_ur
-    iny
-    lda (ZP_PTR_2),y
-    sta pb_ll
-    iny
-    lda (ZP_PTR_2),y
-    sta pb_lr           ; pattern def byte lower right
-    rts
-    ;
 ;=================================================================
 WRITE_hframe_tile_line:
     sta VERA_data0
@@ -304,9 +298,7 @@ create_all_patterns_loop:
 ; x must be preloaded with max patternno. of pattern table
 ; A must be preloaded with color value
 ; ZP_PTR_2 must be preloaded with pointer to pattern inside pat. table
-   :ldy #$00
-    jsr get_patternbytes
-    create_pattern_tile
+   :create_pattern_tile
     clc
     lda ZP_PTR_2
     adc #$04
