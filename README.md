@@ -18,7 +18,7 @@ works with ROM #R47 (other ROM versions untested)
 
 Up to now (14th July 24) a ready to use binary (DOTMAT9.PRG)
 
-and the source code have been uploaded.
+and the complete source code have been uploaded.
 
 Some documentation will be added over time, please be patient.
 
