@@ -1,4 +1,4 @@
-DOT MATRIX for the Commander X16                                         Version 9
+DOT MATRIX version 9 for the Commander X16
 
 - turns the X16 screen into a 5x7 dots per character display
 
