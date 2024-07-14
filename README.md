@@ -9,6 +9,7 @@ features some simple pseudo random generators for garbage text and pattern
 requires a 65C02S CPU: PRG makes use of smbX, rmbx, bbsx, bbrx etc. commands
 
 
-Up to now (14th July 24) only parts of the source code have been uploaded
+Up to now (14th July 24) a ready to use working binary (DOTMAT9.PRG)
+and a few parts of the source code have been uploaded
 Missing parts need some rework and will be added over time
 
