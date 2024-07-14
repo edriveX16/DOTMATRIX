@@ -1,0 +1,12 @@
+The program compiles with the cl65 compile & link utility for cc65, the 6502 series compiler.
+Tested with version:
+cl65 V2.19 - Git 0541b65aa
+
+To compile move to the src directory and run 'make'.
+
+Finished target should be 'DOTMAT.PRG'
+
+In case you have 'x16emu' installed you may use 'make run' to compile and start the program within the emulator.
+Adopt the makefile to your needs (e.g. keymapping).
+
+Current mainfile is 'dotmatrix10.asm' (eventhough the version is V9).
