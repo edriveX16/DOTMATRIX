@@ -1,7 +1,7 @@
 DOT MATRIX for Commander X16                                         Version 9
 
 turns the X16 screen into a 5x7 dots per character display
-supports 2 modes with 20*10 or 40*20 characters per screen
+supports 2 modes with 20x10 or 40x20 characters per screen
 provides 8 pages of text and a simple sequencer
 each page may be individually set to different colors and mode
 features some simple pseudo random generators for garbage text and pattern
