@@ -4,7 +4,7 @@ DOT MATRIX for the Commander X16                                         Version
 
 - supports 2 modes with 20x10 or 40x20 characters per screen
 
-- provides 8 pages of text and a simple sequencer
+- provides 8 pages of text and a rudimentary sequencer
 
 - each page may be individually set to different colors and mode
 
