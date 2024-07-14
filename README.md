@@ -17,9 +17,11 @@ requires a 65C02S CPU: PRG makes use of smbX, rmbx, bbsx, bbrx etc. commands
 
 Up to now (14th July 24) a ready to use binary (DOTMAT9.PRG)
 
-and a few parts of the source code have been uploaded
+and a few parts of the source code have been uploaded.
 
-Missing parts need some rework and will be added over time
+Missing parts need some rework and will be added over time.
+
+In the long run some documentation will be added, please be patient.
 
 
 
