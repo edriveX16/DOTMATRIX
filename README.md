@@ -11,8 +11,9 @@ DOT MATRIX for the Commander X16                                         Version
 - features some simple pseudo random generators for garbage text and pattern
 
 
-requires a 65C02S CPU: PRG makes use of smbX, rmbx, bbsx, bbrx etc. commands
+requires a 65C02S CPU: PRG makes use of smbX, rmbX, bbsX, bbrX etc. commands
 
+works with ROM #R47 (other ROM versions untested)
 
 
 Up to now (14th July 24) a ready to use binary (DOTMAT9.PRG)
