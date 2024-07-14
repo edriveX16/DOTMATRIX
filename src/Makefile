@@ -42,7 +42,8 @@ $(PROG): $(SOURCES)
 	$(ASSEMBLER6502) $(ASFLAGS) -o $(PROG) $(MAIN)
 
 run: all #resources
-	x16emu -keymap de -rockwell -prg $(PROG) -run
+	x16emu -prg $(PROG) -run
+#	x16emu -keymap de -rockwell -prg $(PROG) -run
 #	x16emu -keymap de -prg $(PROG) -run
 #	x16emu -debug -keymap de -prg $(PROG) -run
 #	x16emu -prg $(PROG) -run
