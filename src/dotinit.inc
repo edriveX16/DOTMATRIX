@@ -2,13 +2,19 @@
 DOTINIT_INC = 1
 ;===================================================
 .macro initdotmatrix
-;============================
-; service mode
-; activated when
+;=================================================================================
+; service mode for testing porposes
+; enables 2 additional functions when in the options (F8) menu:
+; F6 -> restarts the program, but without the intro (works only once)
+; F9 -> toggles layer 1  on <-> off,
+;       reveals the compressed character generation by some tile patterns when off
+; The extra service functions will not be mentioned in the menu
+;
+; To eneble service mode enter the following commands before running the program
 ; POKE 48,68
 ; POKE 49,77
 ; POKE 50,83
-; before running
+;
     stz service_mode
     lda $30     ; d48
     cmp #$44    ; d68 'D' = Dot
@@ -25,7 +31,7 @@ DOTINIT_INC = 1
 ; uncoment to activate service mode by default:
 ;    lda #$01
 ;    sta service_mode
-;===================
+;=================================================================================
     cld ; ommit dec mode
     ;
     stz char_value
@@ -80,14 +86,14 @@ DOTINIT_INC = 1
     jsr init_rnd
     ;
 restart:
-    stz zp_crsrstatus
-    stz zpreq_crsmove
+    stz crsrstatus
+    stz req_crsrmove
     stz menu_mode
     ;
     jsr default_keyvec  ; set default keyboard routine
     ;
-    lda joy_wait_time
-    sta joy_wait
+    lda crsr_wait_time
+    sta crsr_wait
     stz char_VRAM_adr_hi
     stz char_VRAM_adr_lo
     ;
