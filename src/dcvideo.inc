@@ -3,8 +3,11 @@ DCVIDEO_INC  = 1
 ;======================================================
 ;row_fill_cnt:           .byte $20
 ;==========================================
+; "normal mode" refers to 20*10 character mode
+; "half mode"   refers to 40*20 character mode
+;==========================================
 ; set mandatory mode depeinding values:
-.macro set_normalmode_values
+.macro set_normalmode_values        ; values for 20*10 char mode
     lda #$08
     sta colframe_inc
     lda #$40
@@ -26,10 +29,10 @@ DCVIDEO_INC  = 1
     lda #$20
     sta row_fill_cnt
     lda #$07
-    sta joy_wait_time
+    sta crsr_wait_time
 .endmacro
 ;==========================================
-.macro set_halfmode_values
+.macro set_halfmode_values          ; values for 40*20 char mode
     lda #$02
     sta colframe_inc
     lda #$11
@@ -51,9 +54,9 @@ DCVIDEO_INC  = 1
     lda #$40
     sta row_fill_cnt
     lda #$04
-    sta joy_wait_time
+    sta crsr_wait_time
     ;
-    stz X16logo_on      ; no logo availiable in half mode
+    stz X16logo_on      ; no logo availiable in 40*20 mode
     jsr logo_switchoff
     ;
 .endmacro
@@ -156,14 +159,14 @@ populate_layer1:
     rts
 ;=================================================  set video and layer modes
 set_mode:
-    stz VERA_dc_video   ; disable display during chaning layer modes and redrawing everything
+    stz VERA_dc_video   ; disable display during changing layer modes and redrawing everything
     bbs0 half_mode, set_half_mode
 ;=================================================
 set_normal_mode:    ; also used by intro
     jsr get_mode_values
     ;
     stz VERA_ctrl   ; set sprite attr to cursor sprite #1
-    lda #$11        ;stride = 1
+    lda #$11        ; stride = 1
     sta VERA_addr_bank
     lda #$FD
     sta VERA_addr_high
@@ -172,19 +175,21 @@ set_normal_mode:    ; also used by intro
     ;
     lda #$01
     sta VERA_ctrl   ; set sprite attr to cursor sprite #1
-    lda #$11        ;stride = 1
+    lda #$11        ; stride = 1
     sta VERA_addr_bank
     lda #$FD
     sta VERA_addr_high
     lda #$F8
     sta VERA_addr_low
     ;
-    ; müsste hier nicht 0 geschrieben werden?
-    ; wg. dem Stride kommen wir zwar ein Byte weiter
-    ; aber das erste Adressbyte vom Sprite wird so
-    ; nur gelesen? Dto. half_mode s.u.
+    ;
+    ; shouldn't 0 be written here?
+    ; because of the stride we get one byte further
+    ; but the first address byte of the sprite is read like this
+    ; only read? Dto. half_mode see below.
     lda VERA_data0      ; lda #<(VRAM_cursor >> 5)
     lda VERA_data1
+    ;
     ;
     lda #>(VRAM_cursor >> 5)
     ora #$80        ; Bit 7 : 8bpp mode
@@ -206,7 +211,7 @@ set_normal_mode:    ; also used by intro
     stz VERA_data0  ; ypos hi
     stz VERA_data1  ; ypos hi
     ;
-    lda zp_crsrstatus ; Bit0 = crsr_on
+    lda crsrstatus ; Bit0 = crsr_on
     and #$FE
     asl
     asl
@@ -233,10 +238,6 @@ set_half_mode:
     stz VERA_ctrl
     lda #$11        ;stride = 1
     sta VERA_addr_bank
-;     lda #$FC
-;     sta VERA_addr_high
-;     lda #$08        ;+8
-
     lda #$FD
     sta VERA_addr_high
     lda #$F0
@@ -253,7 +254,7 @@ set_half_mode:
     lda hcrspr_posy_lo  ; initial half cursor screen y pos
     sta VERA_data0  ; ypos lo
     stz VERA_data0  ; ypos hi
-    lda zp_crsrstatus ; Bit0 = crsr_on
+    lda crsrstatus ; Bit0 = crsr_on
     and #$FE
     asl
     asl
@@ -324,7 +325,7 @@ set_video:
 @enable_video:  ; all modes
     jsr write_txtpage       ; writes Layer 0
     jsr populate_layer1     ; mandatory
- ;   lda #($31|$40)          ; | $40=SPRITE_EN
+    ;
     lda dc_mode
     sta VERA_dc_video
     lda half_mode
