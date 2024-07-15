@@ -1,6 +1,5 @@
 # DOT MATRIX 
-turns your screen into a 5x7 dot matrix display.
-And just lets you put some letters on it.
+Turn your Commander X16 screen into a 5x7 dot matrix display.
 
 Two modes are supported:
 20x10 characters, each 32x48 pixel (default mode)
@@ -14,6 +13,13 @@ Every page can have its own mode and color settings.
 
 One of the unusual things about this program is that it displays menus in the same mode and color as the current page.
 
+How to run the program:
+
+Copy the binary file ("DOTMAT.PRG") to an SD card and insert it into the X16.
+Navigate to the corresponding directory on the X16.
+
+Load the program with ' LOAD "DOTMAT.PRG" '.
+And start with 'run'.
 
 
 # Modes of operation:
