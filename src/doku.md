@@ -31,7 +31,7 @@ F3: Restarts the intro animation
 
 F4: Exits the intro but sets all pages to 40x20 mode
 
-F1: Exits the intro and calls up the F1 main/help menu
+F1: Exits the intro and calls up the F1 'main/help' menu
 
 Any other key: Exits the intro (all pages in 20x10 mode)
 
@@ -56,27 +56,27 @@ Insert ("INST", "einfg"): Switches between insert and overwrite mode
 Del: Deletes the character at the current cursor position. (Depending on the insert or overwrite mode, the following text is moved to the left).
 
 
-F1: Opens the main/help menu
+F1: Opens the 'main/help' menu
 
-F2: Opens the file menu
+F2: Opens the 'file' menu
 
-F3: Opens the editing menu
+F3: Opens the 'edit' menu
 
 F4: Switches the current page directly between 20x10 and 40x20 mode
 
 F5: Directly starts (or stops) the sequencer
 
-F6: Calls up the "Sequencer options" menu
+F6: Call up the 'sequencer options' menu
 
-F7: Call up the sequencer step time menu
+F7: Call up the 'sequencer step time' menu
 
-F8: Call up the options menu
+F8: Call up the 'options' menu
 
-F9: Call up the random menu
+F9: Call up the 'random' menu
 
-F10: Call up the "Cursor options" menu
+F10: Call up the 'cursor options' menu
 
-F11: Call up the "Color settings" menu
+F11: Call up the 'color settings' menu
 
 
 
