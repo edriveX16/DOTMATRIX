@@ -24,7 +24,7 @@ To be on the foolproof serious side:
 
 
 If the program is running on a modern PC with the 'x16emu' emulator, it depends on the security of 'x16emu' and how 'x16emu' is operated.
-But this is beyond the scope of this program.
+But this is beyond the control/scope of this program.
 
 Safety instructions for the operation of DotMatrix with X16emu:
 
