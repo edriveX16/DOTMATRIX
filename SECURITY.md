@@ -20,6 +20,7 @@ To be on the foolproof serious side:
 * Only use this program on the real Hardware Commander X16.
 * Keep the program on a separate SD card on which no other important data is stored.
 * Do not connect the Commander X16 to a network (which is not possible by default anyway).
+* Reset the Commander X16 before and after use of the program.
 
 
 If the program is running on a modern PC with the 'x16emu' emulator, it depends on the security of 'x16emu' and how 'x16emu' is operated.
