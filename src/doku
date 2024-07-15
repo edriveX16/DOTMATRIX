@@ -1,4 +1,5 @@
-DOT MATRIX turns your screen into a 5x7 dot matrix display.
+# DOT MATRIX 
+turns your screen into a 5x7 dot matrix display.
 And just lets you put some letters on it.
 
 Two modes are supported:
@@ -15,13 +16,13 @@ One of the unusual things about this program is that it displays menus in the sa
 
 
 
-Modes of operation:
+# Modes of operation:
 * intro
 * normal page view and edit mode
 * menu mode
 * sequence mode
 
-Intro:
+# Intro:
 The program greets you with an intro animation.
 Keybindings while in intro mode:
 F3: Restarts the intro animation
@@ -30,7 +31,7 @@ F1: Exits the intro and calls up the F1 main/help menu
 Any other key: Exits the intro (all pages in 20x10 mode)
 
 
-Normal page view and edit mode:
+# Normal page view and edit mode:
 Keyboard input:
 Each character entered within the character set should bring a character to the screen at the current cursor position. (Depending on the insert or overwrite mode, the following text is moved to the right).
 Arrow keys: Moving the cursor
@@ -54,7 +55,7 @@ F11: Call up the "Color settings" menu
 
 
 
-Menu mode (all menus):
+# Menu mode (all menus):
 The menu mode is displayed with a title bar like:
 '[=== Menu item ====]'
 The menus are displayed in the same mode and with the same color settings as the current page.
@@ -74,24 +75,8 @@ If a menu item is followed by a '...', the next menu page is opened.
 
 
 
-Sequence mode:
+# Sequence mode:
 A rudimentary sequencer runs through all pages.
 The sequencer can be started with F5 from normal mode or from the sequence-related menus (F6, F7) or from the random menu (F9).
 A running sequence is stopped with F5, ESC or with F6, F7.
 A running sequence can be paused/resumed with the space bar.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
