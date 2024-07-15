@@ -13,9 +13,9 @@ set_allpages2half_mode:
     lda #$07
     sta ZP_tmp_DATA
     ;
-    lda actual_usrtxtlo;
+    lda current_usrtxtlo;
     sta ZP_PTR_5
-    lda actual_usrtxthi
+    lda current_usrtxthi
     sta ZP_PTR_5+1
     lda #$01
     tax
@@ -36,11 +36,6 @@ set_allpages2half_mode:
     dec ZP_tmp_DATA
     bne @stah_loop
    ;
-    rts
-;==========================================
-set_PTR_2:
-    stx ZP_PTR_2
-    sty ZP_PTR_2+1
     rts
 ;==========================================
 WRITE_0011:

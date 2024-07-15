@@ -2,12 +2,12 @@
 PATTERN_INC  = 1
 ; pattern to tile lookup table
 ;
-; Muster codierung: Muster = 2 8er Tiles nur halber charakter linke hälfte
+; Pattern encoding: Muster = two 8s tiles only hlaf character, left half
 ; untere 6 bit: tilenr.
 ; bit7: v-flip
 ; bit6: h-flip
 ;===========================
-; adpot when Muster is growing:
+; adpot when pattern table 'Muster' is growing:
 MStR_tile_offset    =    $1A
 ;===========================
 Muster:
@@ -19,11 +19,11 @@ Muster:
 ; untere reihe
 ; $00, $00
 ;
-;o** ;Muster 1              =*oo   ,wenn h geflippt
+;o** ;Muster 1              =*oo   ,if flipped horizontal
 ;*oo                        =o**
 .byte $00, $83, $01, $00
 ;
-;*** ;Muster 2              =***    , wenn geflippt
+;*** ;Muster 2              =***    , if flipped
 ;*oo                        =o**
 .byte $01, $83, $01, $00
 ;
@@ -83,7 +83,7 @@ Muster:
 ;**o
 .byte $01, $00, $01, $02
 ;
-;oo* ;Muster 17             = M6 bei v-flip  ========== ggf. doppelt
+;oo* ;Muster 17             = M6 if v-flip  ========== possibly double
 ;ooo
 .byte $00, $42, $00, $00
 ;
@@ -99,7 +99,7 @@ Muster:
 ;***
 .byte $00, $02, $01, $01
 ;
-;*oo ;Muster 21             =o**    , wenn h geflippt
+;*oo ;Muster 21             =o**    , if flipped horizontal
 ;ooo                        =ooo
 .byte $01, $00, $00, $00
 ;
@@ -128,12 +128,12 @@ MStR:
 ;ooo
 .byte $00, $00, $00, $00
 ;
-;*oo    ; MStR 1            =o**, wenn h geflippt
+;*oo    ; MStR 1            =o**, if flipped horizontal
 ;***                        =***
 ;*oo                        =o**
 .byte $01, $83, $01, $03
 ;
-;*oo    ; MStR 2            =o**  , wenn h geplippt
+;*oo    ; MStR 2            =o**  ,  if flipped horizontal
 ;*oo                        =o**
 ;*oo                        =o**
 .byte $01, $00, $01, $00
@@ -163,7 +163,7 @@ MStR:
 ;*oo
 .byte $01, $05, $01, $44
 ;
-;*oo    ; MStR 8        =o** , wenn h geflipt?
+;*oo    ; MStR 8        =o** , if flipped horizontal
 ;o**                    =*oo
 ;ooo                    =ooo
 .byte $03, $83, $00, $03
@@ -193,7 +193,7 @@ MStR:
 ;oo*
 .byte $03, $00, $00, $C4
 ;
-;ooo    ; MStR 14       =ooo , wennn h geflippt
+;ooo    ; MStR 14       =ooo , if flipped horizontal
 ;o**                    =*oo
 ;ooo                    =ooo
 .byte $00, $83, $00, $03
@@ -203,7 +203,7 @@ MStR:
 ;oo*
 .byte $00, $C4, $00, $42
 ;
-;*oo    ; MStR 16       =o** , wennn h geflippt
+;*oo    ; MStR 16       =o** , if flipped horizontal
 ;o**                    =*oo
 ;*oo                    =o**
 .byte $03, $83, $83, $03
@@ -223,7 +223,7 @@ MStR:
 ;o*o
 .byte $00, $C4, $00, $45
 ;
-;ooo    ; MStR 20 "G"       =ooo , wennn h geflippt
+;ooo    ; MStR 20 "G"       =ooo , if flipped horizontal
 ;***                        =***
 ;*oo                        =0**
 .byte $83, $83, $01, $03
@@ -233,7 +233,7 @@ MStR:
 ;oo*
 .byte $00, $44, $00, $C4
 ;
-;*oo    ; MStR 22 =$16  =o** ,wenn h geflippt
+;*oo    ; MStR 22 =$16  =o** ,if flipped horizontal
 ;*oo                    =o**
 ;***                    =***
 .byte $01, $00, $01, $83
@@ -299,7 +299,7 @@ MStR:
 ;o*o
 .byte $00, $02, $00, $02
 ;
-;ooo    ; MStR 35 = $23     =ooo   , wenn h geflippt
+;ooo    ; MStR 35 = $23     =ooo   , if flipped horizontal
 ;ooo                        =ooo
 ;o**                        =*oo
 .byte $00, $00, $00, $83
@@ -319,13 +319,13 @@ MStR:
 ;*o*
 .byte $00, $44, $83, $C4
 ;
-;o**    ; MStR 39   =*oo , wenn h geflippt
+;o**    ; MStR 39   =*oo , if flipped horizontal
 ;ooo                =ooo
 ;o**                =*oo
 .byte $00, $03, $00, $83
 ;
 ; since lower case
-;o**    ; MStR 40   =*oo ,  wenn h geflippt
+;o**    ; MStR 40   =*oo ,  if flipped horizontal
 ;*oo                =o**
 ;***                =***
 .byte $83, $03, $01, $83
@@ -335,7 +335,7 @@ MStR:
 ;*oo
 .byte $01, $45, $01, $04
 ;
-;o**    ; MStR 42 = $2A     =*oo   , wenn h geflippt
+;o**    ; MStR 42 = $2A     =*oo   , if flipped horizontal
 ;*oo                        =o**
 ;*oo                        =o**
 .byte $83, $03, $01, $00
@@ -345,7 +345,7 @@ MStR:
 ;ooo
 .byte $00, $C4, $00, $44
 ;
-;***    ; MStR 44   =*** , wenn h geplippt
+;***    ; MStR 44   =*** , if flipped horizontal
 ;*oo                =o**
 ;***                =***
 .byte $01, $03, $01, $83

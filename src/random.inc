@@ -154,7 +154,7 @@ ins_cx16_atrand_pos:
 random_txt:
     stz ZP_PTR_5
     stz ZP_PTR_6
-    lda actual_usrtxthi
+    lda current_usrtxthi
     sta ZP_PTR_5+1
     sta ZP_PTR_6+1
     clc
@@ -220,7 +220,7 @@ next_rnd:
 ;===========================================
 rndpattern:
     stz ZP_PTR_5
-    lda actual_usrtxthi
+    lda current_usrtxthi
     sta ZP_PTR_5+1
     clc
     adc #$03
@@ -401,22 +401,22 @@ random_preset:
     rts
 ;============================================
 random_allpreset:
-    lda actual_usrtxthi
+    lda current_usrtxthi
     sta memactpg_hi
     lda #>usrtxt0;
-    sta actual_usrtxthi
-    stz actual_usrtxtlo
+    sta current_usrtxthi
+    stz current_usrtxtlo
     ;
     ldx #$08
     ;
    :jsr random_preset
     jsr save_page_settings
-    jsr actual_usrtxt_inc
+    jsr current_usrtxt_inc
     dex
     bne :-
-    stz actual_usrtxtlo
+    stz current_usrtxtlo
     lda memactpg_hi
-    sta actual_usrtxthi
+    sta current_usrtxthi
     rts
 ;==========================
 .macro random_steptime_logo

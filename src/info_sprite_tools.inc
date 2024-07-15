@@ -25,7 +25,7 @@ set_VERA_pageadr:
     lda #$10  ; +0 = (lo adr >>5)
     sta VERA_addr_low
     ;
-    lda actual_usrtxthi
+    lda current_usrtxthi
     and #$1C
     eor #$10
     asl
@@ -134,7 +134,7 @@ pageSPR_swipeout:
 page_irq_handler:
     lda VERA_isr
     and #VSYNC_BIT
-    bne @test_pageswipe ;@runsync ; non-VSYNC IRQ, no tick update
+    bne @test_pageswipe  ; non-VSYNC IRQ, no tick update
     jmp (default_irq_vector) ; continue IRQ handler
     ;
 @test_pageswipe:
@@ -154,7 +154,7 @@ page_irq_handler:
     bmi @endtest_swipe
     jsr pageSPR_swipeout
 @endtest_swipe:
-    jmp swipes;test_vlineswipe ; found in  main default IRQ routine
+    jmp swipes ; found in  main default IRQ routine
 ;===================================================================
 
 .endif

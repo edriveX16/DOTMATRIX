@@ -1,0 +1,47 @@
+DOT MATRIX turns your screen into a 5x7 dot matrix display.
+And just lets you put some letters on it.
+
+Two modes are supported:
+20*10 characters, each 32*48 pixel
+or
+40*20 characters, each 16*24 pixel.
+
+Toggling between modes is done via F4.
+
+There are 8 pages (0-7).
+Use page up/down buttons to switch pages.
+
+Every page may have its own mode and color settings.
+Color settings are done in the color menu, hit F11.
+Possible color settings differ denpending on mode.
+
+F10 in the color menu sets all pages to the same mode and color.
+
+
+A rudimentary sequencer lets all pages cycle, while each page may have it's own step time.
+Step time is set with the F7 menu.
+The F6  menu lets you activate a "sequence running" indicator shown in the lower left corner while running.
+Also the page no. indicator may be activated that shows when the sequence proceeds to a next page.
+Both act as reminders, that something is still running, especially when pages are still empty and look the same.
+Sequence is started and stopped by F5 (ESC, F6,F7 also stopps).
+
+Once in a menu (shown with a title bar), only the mentioned keys will work.
+ESC should allways take you out.
+
+One of the unusual things with this program is, that it shows menus in the same mode and color as the actual page.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

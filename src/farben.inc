@@ -106,16 +106,6 @@ VERA_addr_to_vlineDEMOSPR:  ; sets VRAM data pointer to sprite #2 attr low addre
     sta VERA_addr_low
     rts
     ;
-;==================================
-set_pagesettings_ptr:
-    lda #$20
-    sta ZP_PTR_5
-    clc
-    lda actual_usrtxthi
-    adc #$03
-    sta ZP_PTR_5+1
-    rts
-;=====================================
 .macro make_samecolors
     clc
     lda #>usrtxt0;

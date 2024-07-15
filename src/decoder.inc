@@ -165,7 +165,7 @@ create_temp_patternpointer:
     ;
     lda ZP_PTR_9
     ;           ; add offset-pointer to start-pointer
-    clc         ; 8 zu 16 Bit-Addition
+    clc         ; 8 to 16 Bit-Addition
     adc pattern_offset_ptr
     sta ZP_PTR_8
     bcc :+
@@ -401,12 +401,12 @@ write_singlechar:
     beq @wb
     lda char_value
     beq :+
-    lda #$05   ; grosser punkt
+    lda #$05   ; big dot
     bra @outsp
-   :lda #$04   ; kleiner punkt
+   :lda #$04   ; small dot
     bra @outsp
 @chkspecial:            ; >=128
-    lda menu_mode       ; extra for menue bar chars
+    lda menu_mode       ; extra for menu bar chars
     bne @sp
     lda char_value
     and #$7F
@@ -414,7 +414,7 @@ write_singlechar:
     bmi @sp
     lda show_whitespc
     beq @wb
-    lda #$05   ; grosser punkt
+    lda #$05   ; big dot
     bra @outsp
     ;
 @sp:lda char_value

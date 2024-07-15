@@ -3,12 +3,13 @@ GRAFICS_INC  = 1
 .include "farben.inc"
 .include "presets.inc"
 ;====================================
-lite_col:               .byte $05
+lite_col:               .byte $05   ; refers to a color value
 litebg_col:             .byte $00
 frame_col:              .byte $00
 framebg_col:            .byte $51
 corner_col:             .byte $51
-cheat_litecol:          .byte $E0
+;
+cheat_litecol:          .byte $E0   ; refers to a tile offset in VRAM
 cheat_litebgcol:        .byte $10
 cheat_colframe:         .byte $18
 cheat_stylframe:        .byte $00
@@ -40,7 +41,7 @@ WRITE_8_byte:
 ;
 WRITE_16_byte:
     ldy #$10
-   :sta VERA_data0  ;write acc2VERA
+   :sta VERA_data0  ; write acc2VERA
     dey
     bne :-
     rts
@@ -48,15 +49,15 @@ WRITE_16_byte:
 WRITE_64_byte:      ; messes up .Y and .X
     ldx #$04
    :ldy #$10
-   :sta VERA_data0  ;write acc2VERA
+   :sta VERA_data0  ; write acc2VERA
     dey
     bne :-
     dex
     bne :--
     rts
 WRITE_16z_byte:
-    ldy #$10            ;16 times
-   :stz VERA_data0      ;write zero
+    ldy #$10            ; 16 times
+   :stz VERA_data0      ; write zero
     dey
     bne :-
     rts
@@ -155,6 +156,8 @@ create_4frametypes:         ; resulting in different dot 'styles'
 ;====================================================== Create eight types of 8x8 lite tiles
 create_bg_tiles:
     sta litebg_col
+;========================================                      tileno.
+;
 ;======================================== blank tile            #00
     lda litebg_col
     jsr WRITE_64_byte

@@ -507,7 +507,7 @@ sequencer_irq_handler:
     bmi @seq_ntimer_div
     stz seq_nxttimer_div
     ;
-    jsr actual_usrtxt_inc
+    jsr current_usrtxt_inc
     jsr memorize_prevmode
     jsr restore_page_settings
     jsr check_refreshmode

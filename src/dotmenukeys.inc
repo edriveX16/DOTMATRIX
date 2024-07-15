@@ -241,7 +241,7 @@ proc_menu7keys:                     ; seq. timing menu
     ;
     jsr save_page_settings
     jsr memorize_prevmode
-    jsr actual_usrtxt_inc
+    jsr current_usrtxt_inc
     bra @proc_dwnkey
     ;
 @pg_upkey:                      ; previous page
@@ -250,7 +250,7 @@ proc_menu7keys:                     ; seq. timing menu
     ;
     jsr save_page_settings
     jsr memorize_prevmode
-    jsr actual_usrtxt_dec
+    jsr current_usrtxt_dec
 @proc_dwnkey:
     jsr restore_page_settings
     jsr check_refreshmode
@@ -442,14 +442,14 @@ proc_menuBkeys:                 ; color menu
     bne @pg_upkey
     jsr save_page_settings
     jsr memorize_prevmode
-    jsr actual_usrtxt_inc
+    jsr current_usrtxt_inc
     bra @proc_dwnkey
 @pg_upkey:                      ; previous page
     cmp #$82
     bne @F1key
     jsr save_page_settings
     jsr memorize_prevmode
-    jsr actual_usrtxt_dec
+    jsr current_usrtxt_dec
 @proc_dwnkey:
     jsr restore_page_settings
     jsr check_refreshmode
@@ -524,15 +524,15 @@ proc_menuAkeys: ; cursor menu
     cmp #$8C    ; $8C=F8 key:   toggle cursor auto mode
     bne @F9key
     ;
-    bbs1 zp_crsrstatus, @F8out
-    smb1 zp_crsrstatus ; Bit1 = crsr_auto
+    bbs1 crsrstatus, @F8out
+    smb1 crsrstatus ; Bit1 = crsr_auto
     lda #$01    ;1 = "on"
     sta select_onoff
     jsr cursor_switchon
     jsr ins_onofftxt2systxt
     bra @out
 @F8out:
-    rmb1 zp_crsrstatus ; Bit1 = crsr_auto
+    rmb1 crsrstatus ; Bit1 = crsr_auto
     lda #$02    ;2 = "auto"
     sta select_onoff
     jsr ins_onofftxt2systxt

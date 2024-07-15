@@ -22,7 +22,7 @@ cont_fromseqirq:
     bra @long_end_IRQ_handler
     ;
 @runsync:   ; custom IRQ handling
-    inc joy_wait
+    inc crsr_wait
     lda ticks
     cmp #$1C;#$27   ; ticks sub divider
     bne @next_tick
@@ -30,7 +30,7 @@ cont_fromseqirq:
     stz ticks       ; reset ticks
     ;
 ; blink cursor
-    bbr0 zp_crsrstatus, @endtiming ; Bit0 = 1:crsr_on
+    bbr0 crsrstatus, @endtiming ; Bit0 = 1:crsr_on
     stz VERA_ctrl
     jsr VERA_addr_to_cursorZ
     lda VERA_data0  ; look whats inside z, no stride needed
@@ -41,7 +41,7 @@ cont_fromseqirq:
     ;
     sta VERA_data1  ; write it back
     ;
-   :bbs1 zp_crsrstatus, @endtiming  ; Bit1 = 0 crsr_auto, 1= on
+   :bbs1 crsrstatus, @endtiming  ; Bit1 = 0 crsr_auto, 1= on
     ;
     lda crsr_offtimer
     cmp #$11
@@ -60,19 +60,19 @@ cont_fromseqirq:
     bne @chk_halfmode;@checktxtonly;@newcrsrpos_done
     bbs0 seq_statusbits, @newcrsrpos_done   ; don't do cursor (moves) when sequence runs
     ;
-    lda zpreq_crsmove
+    lda req_crsrmove
     beq @newcrsrpos_done
-    bbs0 zpreq_crsmove, @gor  ;right
-    bbs1 zpreq_crsmove, @gol  ;left
-    bbs2 zpreq_crsmove, @god  ;down
-    bbs3 zpreq_crsmove, @gou  ;up
+    bbs0 req_crsrmove, @gor  ;right
+    bbs1 req_crsrmove, @gol  ;left
+    bbs2 req_crsrmove, @god  ;down
+    bbs3 req_crsrmove, @gou  ;up
     ;
     bra @newcrsrpos_done
 @gou:   ; go up
     lda crsr_posy
     beq @newcrsrpos_done
     dec crsr_posy
-    bra @cr_refresh
+    bra @crsr_refresh
 @god:   ; go down
     lda crsr_posy
     cmp max_line_no_mone
@@ -80,20 +80,20 @@ cont_fromseqirq:
     bra @newcrsrpos_done
 @md:
     inc crsr_posy
-    bra @cr_refresh
+    bra @crsr_refresh
 @gol:   ; go left
     jsr cursor_decposx
-    bra @cr_refresh
+    bra @crsr_refresh
 @gor:   ; go right
     jsr cursor_incposx
-    bra @cr_refresh
+    bra @crsr_refresh
 @newcrsrpos_done:
-    stz zpreq_crsmove
+    stz req_crsrmove
     bra @end_IRQ_handler
 ;=============
-@cr_refresh:
-    stz zpreq_crsmove
-    stz joy_wait
+@crsr_refresh:
+    stz req_crsrmove
+    stz crsr_wait
     jsr move_cursor
     jsr cursor_switchon
     ;

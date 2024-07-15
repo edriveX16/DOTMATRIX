@@ -73,7 +73,7 @@ ins_onofftxt2systxt:
 ;===========================================
 .macro act_pg2chrs
     clc
-    lda actual_usrtxthi
+    lda current_usrtxthi
     lsr
     lsr
     eor #$04
@@ -210,7 +210,7 @@ syscpy_loop:
     bne :-
     rts
 ;==================================================================
-.macro writecharset2systxt
+.macro write_charset2systxt
     lda chrset_inc  ; some line down depending on mode
     sta single_line_indent  ; set_indent_PTR_4 uses single_line_indent only
     jsr set_indent_PTR_4

@@ -41,19 +41,20 @@ zp_line_SPR_xposlo  = $42 ; ->include file 'cursormove'
 zp_line_SPR_xposhi  = $43 ; ->include file 'cursormove'
 ticks               = $44
 crsr_offtimer       = $45
-joy_wait            = $46
+crsr_wait            = $46
 ;count_256          = $47 ; not used
 Z_pointer_lo        = $48
 Z_pointer_hi        = $49
 Z_pointer_inc_lo    = $4A   ;$08 normal mode, half mode= $04
 Z_pointer_inc_hi    = $4B   ;$06 normal mode, half mode= $03
-actual_usrtxtlo     = $4C
-actual_usrtxthi     = $4D
+current_usrtxtlo     = $4C
+current_usrtxthi     = $4D
 char_VRAM_adr_lo    = $4E
 char_VRAM_adr_hi    = $4F
 ;
 half_mode           = $50  ; 0 = off (=20*10 chars), 1 = half mode (=40*20 chars)
-zp_crsrstatus       = $51   ; Bit0 = on, 1= auto, (0= auto, 1= allways on),
+;zp_crsrstatus       = $51   ; Bit0 = on, 1= auto, (0= auto, 1= allways on),
+crsrstatus       = $51   ; Bit0 = on, 1= auto, (0= auto, 1= allways on),
 row_fill_cnt        = $52   ;.byte $20 CVIDEO_INC
 digit_inc_cnt       = $53 ; ->include file 'cursormove'
 dot_inc_cnt         = $54 ; ->include file 'cursormove'
@@ -62,8 +63,8 @@ cheat_frame         = $56 ;
 cheat_useframe      = $57 ;
 old_oct             = $58 ; ->include file 'cursormove'
 pageSPR_swiperuns   = $59 ; ->include file 'charrom'
-zpreq_crsmove       = $5A   ; bit0 right, bit1 left, bit2 down, bit3 up
-zp_flips            = $5B   ; ->include file 'decoder', 'halfsize'
+req_crsrmove         = $5A ; bit0 right, bit1 left, bit2 down, bit3 up
+zp_flips            = $5B ; ->include file 'decoder', 'halfsize'
 textrefresh         = $5C
 mode_last_run       = $5D
 ;

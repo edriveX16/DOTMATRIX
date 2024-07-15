@@ -32,6 +32,11 @@ inc_PTR_1:
     bcc :+
     inc ZP_PTR_1+1
    :rts
+;========================
+set_PTR_2:
+    stx ZP_PTR_2
+    sty ZP_PTR_2+1
+    rts
 ;==================================
 add_line_2_ZP4:
     clc
@@ -73,32 +78,41 @@ sto_inc_nload_PTR5:
    :lda ZP_PTR_5
     rts
 ;================================
-actual_usrtxt_inc:
-    lda actual_usrtxthi
+current_usrtxt_inc:
+    lda current_usrtxthi
     cmp #>usrtxt7
     bmi @tinc
     lda #>usrtxt0
-    sta actual_usrtxthi
+    sta current_usrtxthi
     rts
 @tinc:
     clc
-    lda actual_usrtxthi
+    lda current_usrtxthi
     adc #$04
-    sta actual_usrtxthi
+    sta current_usrtxthi
     rts
 ;=======================
-actual_usrtxt_dec:
-    lda actual_usrtxthi
+current_usrtxt_dec:
+    lda current_usrtxthi
     cmp #>usrtxt0
     beq @tdec
-    lda actual_usrtxthi
+    lda current_usrtxthi
     sec
     sbc #$04
-    sta actual_usrtxthi
+    sta current_usrtxthi
     rts
 @tdec:
     lda #>usrtxt7
-    sta actual_usrtxthi
+    sta current_usrtxthi
+    rts
+;==================================
+set_pagesettings_ptr:
+    lda #$20
+    sta ZP_PTR_5
+    clc
+    lda current_usrtxthi
+    adc #$03
+    sta ZP_PTR_5+1
     rts
 ;================================================
 .endif

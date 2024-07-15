@@ -18,9 +18,9 @@ delete_systxt:
     bra del_tRAM
     ;
 delete_txtRAM:
-    lda actual_usrtxtlo
+    lda current_usrtxtlo
     sta r0L
-    lda actual_usrtxthi
+    lda current_usrtxthi
     sta r0H
     ;
     lda #$20    ; $20
@@ -124,14 +124,14 @@ i_onepagesettings:
 ;========================
 init_pagesettings:
     lda #<usrtxt0
-    sta actual_usrtxtlo
+    sta current_usrtxtlo
     lda #>usrtxt0
-    sta actual_usrtxthi
+    sta current_usrtxthi
     ;
     jsr i_onepagesettings
     ;
     ldx #$07
-   :jsr actual_usrtxt_inc
+   :jsr current_usrtxt_inc
     jsr i_onepagesettings
     ;
     dex
@@ -139,16 +139,16 @@ init_pagesettings:
     ;
     ; exit with usrtxt0 being the actual one
     lda #<usrtxt0
-    sta actual_usrtxtlo
+    sta current_usrtxtlo
     lda #>usrtxt0
-    sta actual_usrtxthi
+    sta current_usrtxthi
     ;
     rts
 ;===========================================
 del_shift_txtRAM:  ; shifts text 2 left and adds $20 'spc' at last position
-    lda actual_usrtxtlo
+    lda current_usrtxtlo
     sta ZP_PTR_4            ; REM: moved from ZP_PTR_5 to ZP_PTR_4
-    lda actual_usrtxthi
+    lda current_usrtxthi
     sta ZP_PTR_4+1
     ;
     ldx crsr_posy
@@ -210,9 +210,9 @@ shift_right_txtRAM:  ; shifts text 2 right
 ;     sta ZP_PTR_4+1
 ;     bra char_2_tRAM
 char_2_txtRAM:  ; writes character into actual usertextRAM
-    lda actual_usrtxtlo
+    lda current_usrtxtlo
     sta ZP_PTR_4        ; ZP_PTR_4 can't be used otherwise insert won't work
-    lda actual_usrtxthi
+    lda current_usrtxthi
     sta ZP_PTR_4+1
 ;char_2_tRAM:
     ldx #$01    ; preload error code in case we exit
@@ -261,8 +261,8 @@ load_file:
     jsr set_filedevice
     ;
     lda #00   ; load target CPU RAM
-    ldx actual_usrtxtlo
-    ldy actual_usrtxthi
+    ldx current_usrtxtlo
+    ldy current_usrtxthi
     jsr LOAD ; -> c= error, a= error code
     bcc :+
     jmp save_file
@@ -272,12 +272,12 @@ save_file:
     jsr set_filedevice
     ;
     clc
-    lda actual_usrtxtlo
+    lda current_usrtxtlo
     sta ZP_PTR_4
     adc #$20
     tax
     ; Achtung kein bcc abgefragt! geht hier weil bekannt, dass Adresse auf 00en endet.
-    lda actual_usrtxthi
+    lda current_usrtxthi
     sta ZP_PTR_4+1
     adc #$03        ; $0320 = d800 = 40*20
     tay
@@ -287,14 +287,14 @@ save_file:
     ;rts
 ;==========================================
 copypage:
-    lda actual_usrtxtlo
+    lda current_usrtxtlo
     sta r0L
-    lda actual_usrtxthi
+    lda current_usrtxthi
     sta r0H
-    jsr actual_usrtxt_inc
-    lda actual_usrtxtlo
+    jsr current_usrtxt_inc
+    lda current_usrtxtlo
     sta r1L
-    lda actual_usrtxthi
+    lda current_usrtxthi
     sta r1H
     ;
     lda #$20    ; $20
@@ -317,7 +317,7 @@ l_loop:             ; may be used to cpy line with undefined lenght (see menu ba
     bne :++
    :rts                 ; exit on $00 or EOF
     ;
-   :cmp #$0F            ; Function   26.02.2024 : wird noch nicht genutzt, Exit on special function
+   :cmp #$0F            ; Function   26.02.2024 : not used yet: Exit on special function
     beq :+
     sta (ZP_PTR_4),y
    :jsr inc_PTR_1
@@ -358,9 +358,9 @@ write_txtpage:
     lda menu_mode       ; checkout possible menu mode
     bne @sys_txt        ; to select text pointer
     ;
-    lda actual_usrtxtlo ; usr text pointer changes by page
+    lda current_usrtxtlo ; usr text pointer changes by page
     sta ZP_PTR_3
-    lda actual_usrtxthi
+    lda current_usrtxthi
     sta ZP_PTR_3+1
     bra @write_txt
 @sys_txt:

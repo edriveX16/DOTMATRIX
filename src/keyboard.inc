@@ -21,22 +21,22 @@ proc_defkeys:
 @crsr_rikey:
     cmp #$1D    ; $1D= cursor right key:
     bne @crsr_lekey
-    smb0 zpreq_crsmove
+    smb0 req_crsrmove
     bra @m_l
 @crsr_lekey:    ; $9D= cursor left key:
     cmp #$9D
     bne @crsr_dnkey
-    smb1 zpreq_crsmove
+    smb1 req_crsrmove
     bra @m_l
 @crsr_dnkey:    ; $11= cursor down key:
     cmp #$11
     bne @crsr_upkey
-    smb2 zpreq_crsmove
+    smb2 req_crsrmove
     bra @m_l
 @crsr_upkey:
     cmp #$91    ; $91= cursor up key:
     bne @ins_key    ;@returnkey
-    smb3 zpreq_crsmove
+    smb3 req_crsrmove
     bra @m_l
 @ins_key:
     cmp #$94    ; $94= insert key:
@@ -67,7 +67,7 @@ proc_defkeys:
     cmp #$02
     bne @pg_upkey
     jsr save_page_settings
-    jsr actual_usrtxt_inc
+    jsr current_usrtxt_inc
     jsr pageSPR_startswipeout
     jmp restore_close
     ;
@@ -75,7 +75,7 @@ proc_defkeys:
     cmp #$82
     bne @tabkey
     jsr save_page_settings
-    jsr actual_usrtxt_dec
+    jsr current_usrtxt_dec
     jsr pageSPR_startswipeout
     jmp restore_close
     ;
@@ -171,7 +171,7 @@ proc_defkeys:
 @F4key:
     cmp #$8A    ; $8A=F4 key: toggles mode
     bne @F5key
-    jsr save_page_settings  ; speichert UND versorgt ZP_PTR_5 mit actual_usrtxt pointer
+    jsr save_page_settings  ; speichert UND versorgt ZP_PTR_5 mit current_usrtxt pointer
     ldy #$01
     bbs0 half_mode, :+
     lda #$01

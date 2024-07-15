@@ -125,7 +125,7 @@ max_char_p_line:        .byte $14   ;$14 normal mode, half mode= $28
 max_line_no_mone:       .byte $09   ;$09 normal mode, half mode= $13
 max_char_p_line_mone:   .byte $13   ;$13 normal mode, half mode= $27
 ;
-joy_wait_time:          .byte $07
+crsr_wait_time:         .byte $07
 ;padding:           .byte $00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00
 ;
 ; REM: include files may include further include files !!!

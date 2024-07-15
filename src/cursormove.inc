@@ -55,7 +55,7 @@ cursor_switchon:
    bbs0 half_mode, :+
    sta VERA_data1
    ;
-  :smb0  zp_crsrstatus  ; set bit 0 = crsr_on  /on
+  :smb0  crsrstatus  ; set bit 0 = crsr_on  /on
    stz crsr_offtimer    ; restart cursor blanking timer
    rts
    ;
@@ -63,7 +63,7 @@ cursor_switchoff:
    jsr VERA_addr_to_cursorZ
    stz VERA_data0
    stz VERA_data1
-   rmb0  zp_crsrstatus  ; reset bit 0 = crsr_on /off
+   rmb0  crsrstatus  ; reset bit 0 = crsr_on /off
    rts
    ;
 ;====================================

@@ -38,7 +38,7 @@ setup_menu:
     ;
     lda menu_mode
 ;@m1:
-    cmp #$01    ; menu 1
+    cmp #$01    ; menu 1 page 1/3
     bne @m2
     ldx #<proc_menu1keys
     ldy #>proc_menu1keys
@@ -201,7 +201,6 @@ setup_menu:
     lda #$05
     sta crsr_posy
     jsr move_cursor
-   ; stz crsr_offtimer
     jsr cursor_switchon
     ;
     ldx #<proc_menuAkeys
@@ -209,7 +208,7 @@ setup_menu:
     jsr insert_ESC
     smb7 post_ins
     ;
-    bbr1 zp_crsrstatus, @sel_auto
+    bbr1 crsrstatus, @sel_auto
     lda #01         ; "on"
     sta select_onoff
     bra :+
@@ -247,7 +246,7 @@ setup_menu:
     jmp scopy
     ;
 @mE:
-    cmp #$0E    ; menu 1 2/2
+    cmp #$0E    ; menu 1 page 2/3
     bne @mF
     ldx #<proc_menuEkeys
     ldy #>proc_menuEkeys
@@ -260,7 +259,7 @@ setup_menu:
     ldy #>menutxtEh
     jmp scopy
 @mF:
-    cmp #$0F    ; menu 1 ascii
+    cmp #$0F    ; menu 1 page 3/3 ascii char.set
     beq :+
     jmp close_menu
     ;
@@ -273,7 +272,7 @@ setup_menu:
     bra :++
    :lda #$AC
    :sta chrset_inc
-    writecharset2systxt
+    write_charset2systxt
     ;
     ldx #<menutxtF
     ldy #>menutxtF
