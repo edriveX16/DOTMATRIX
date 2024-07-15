@@ -24,15 +24,23 @@ One of the unusual things about this program is that it displays menus in the sa
 
 # Intro:
 The program greets you with an intro animation.
+
 Keybindings while in intro mode:
+
 F3: Restarts the intro animation
+
 F4: Exits the intro but sets all pages to 40x20 mode
+
 F1: Exits the intro and calls up the F1 main/help menu
+
 Any other key: Exits the intro (all pages in 20x10 mode)
 
 
+
 # Normal page view and edit mode:
+
 Keyboard input:
+
 Each character entered within the character set should bring a character to the screen at the current cursor position. (Depending on the insert or overwrite mode, the following text is moved to the right).
 Arrow keys: Moving the cursor
 Home ("CLR/HOME", "pos1"): Positions the cursor in the top left-hand corner
