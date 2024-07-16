@@ -70,11 +70,15 @@ Home ("CLR/HOME", "pos1"): Positions the cursor in the top left-hand corner.
 
 End: Moves the cursor to the end of the current line.
 
+TAB: Moves the cursor 4 positions to the right (if possible, otherwise to the end of the line).
+
 Page up/down: Moves to the next/previous page.
 
 Ins ("INST", "einfg"): Switches between insert and overwrite mode.
 
 Del: Deletes the character at the current cursor position. (Depending on the insert or overwrite mode, the following text is moved to the left).
+
+BACKSPACE: Deletes the character to the left of the cursor. The text to the right of the cursor is moved to the left if insert mode is selected.
 
 
 F1: Opens the 'main/help' menu
