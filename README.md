@@ -15,7 +15,16 @@ requires a 65C02S CPU: PRG makes use of smbX, rmbX, bbsX, bbrX etc. commands
 
 works with ROM #R47 (other ROM versions untested)
 
-Basic documentation on operation has been added.
+============================================================================
+
+
+Lastest update:
+
+
+July, 14th, 24:
+
+Added basic documentation on operation.
 
 see DOCUMENTATION.md
 
+Minor code clean up (mainly on naming/wording, comments)
