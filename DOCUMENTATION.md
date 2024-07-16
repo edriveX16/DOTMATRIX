@@ -319,6 +319,9 @@ Note: One of the cursor colors is invisible, this can be used as an "always off"
 
 F10: Switches between different erase line colors (The erase line is the vertical line that wipes across the screen when you use the erase functions of the F3 edit menu).
 
+Ins ("INST"): Switches between insert and overwrite mode. As the cursor changes its shape depending on whether insert or overwrite is selected, "INST" also works in this menu. In insert mode the cursor is just a simple line, in overwrite mode it looks like a bracket open at the top.
+
+
 Note:
 
 The color settings of the cursor are saved independently on each page for both modes (20x10 or 40x20). E.g. you can have a red cursor on page 1 in 20x10 mode and a green cursor on the same page 1 in 40x20 mode.
