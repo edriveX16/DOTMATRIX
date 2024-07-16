@@ -13,6 +13,11 @@ Every page can have its own mode and color settings.
 
 One of the unusual things about this program is that it displays menus in the same mode and color as the current page.
 
+# Preconditions:
+
+The program requires the default 65C02S CPU, which supports commands such as smbx, bbsx etc.
+
+
 # How to run the program:
 
 Copy the binary file ("DOTMAT.PRG") to an SD card and insert it into the X16.
@@ -21,12 +26,14 @@ Navigate to the corresponding directory on the X16.
 Load the program with ' LOAD "DOTMAT.PRG" '.
 And start with 'run'.
 
+
+The program can also be run with the 'x16emu' emulator. Further information can be found at:
+https://github.com/x16community/x16-emulator
+
 Note:
 
 If the file "DOTMAT.TXT" exists in the same working directory, the program will attempt to load its contents on page 0 when it is started.
 Otherwise an attempt is made to create an empty "DOTMAT.TXT" (more details in the F2 file menu).
-
-
 
 
 # Modes of operation:
