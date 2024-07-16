@@ -21,7 +21,7 @@ works with ROM #R47 (other ROM versions untested)
 Lastest update:
 
 
-July, 14th, 24:
+July, 16th, 24:
 
 Added basic documentation on operation.
 
