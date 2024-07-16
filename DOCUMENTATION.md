@@ -15,7 +15,8 @@ One of the unusual things about this program is that it displays menus in the sa
 
 # Preconditions:
 
-The program requires a Commander X16 with the default 65C02S CPU, which supports commands such as smbx, bbsx etc.. 
+The program requires a Commander X16 with the default 65C02S CPU, which supports commands such as smbx, bbsx etc..
+
 Or as an alternative the emulator 'x16emu'. Further information can be found at:
 
 https://github.com/x16community/x16-emulator
