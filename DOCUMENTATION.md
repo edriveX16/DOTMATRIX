@@ -21,6 +21,8 @@ Or as an alternative the emulator 'x16emu'. Further information can be found at:
 
 https://github.com/x16community/x16-emulator
 
+It is known that the program runs with ROM version #R47 (other ROM versions have not been tested).
+
 
 # How to run the program:
 
