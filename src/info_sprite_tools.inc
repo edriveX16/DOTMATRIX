@@ -1,39 +1,15 @@
 .ifndef INFO_SPRITE_TOOLS_INC
 INFO_SPRITE_TOOLS_INC = 1
+;=======================================================================================
+; functions to animate these small info-sprites, which are displayed from above on occasion
+; like e.g. 'page 0'...'page 7' or 'sequence start ' etc.
+;=======================================================================================
 ;
 ;============================================
 pageSPR_mode:           .byte   $00
 pageSPR_swipedelay:     .byte   $00
 pageSPR_preswipedelay:  .byte   $00
 ;============================================
-VERA_addr_to_pageZ:
-   stz VERA_ctrl
-   lda #$01  ; stride =0
-   sta VERA_addr_bank
-   lda #$FD
-   sta VERA_addr_high
-   lda #$16  ; +6 = Z
-   sta VERA_addr_low
-   rts
-;====================================
-set_VERA_pageadr:
-    stz VERA_ctrl
-    lda #$01  ; stride =0
-    sta VERA_addr_bank
-    lda #$FD
-    sta VERA_addr_high
-    lda #$10  ; +0 = (lo adr >>5)
-    sta VERA_addr_low
-    ;
-    lda current_usrtxthi
-    and #$1C
-    eor #$10
-    asl
-    asl
-    ora #$80
-    sta VERA_data0
-    rts
-;====================================
 pageSPR_switchon:
     stz pageSPR_swiperuns
     jsr pageSPR_swiperespos
@@ -53,18 +29,7 @@ pageSPR_switchoff:
    stz pageSPR_swiperuns
    rts
    ;
-;====================================
-set_page_IRQVec:
-    sei
-    lda #<page_irq_handler
-    sta IRQVec
-    lda #>page_irq_handler
-    sta IRQVec+1
-    lda #VSYNC_BIT ; make VERA only generate VSYNC IRQs
-    sta VERA_ien
-    cli
-    rts
-;====================================
+; ;====================================
 pageSPR_swiperespos:
     stz VERA_ctrl
     lda #$11  ; stride =1
@@ -154,7 +119,7 @@ page_irq_handler:
     bmi @endtest_swipe
     jsr pageSPR_swipeout
 @endtest_swipe:
-    jmp swipes ; found in  main default IRQ routine
+    jmp swipes ; continiue with default IRQ routine
 ;===================================================================
 
 .endif

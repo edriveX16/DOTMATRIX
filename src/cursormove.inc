@@ -23,26 +23,6 @@ ov_crspr_posy_lo:    .byte $22,$52,$82,$B2,$E2,$12,$42,$72,$A2,$D2   ; digit >= 
 h_ov_crspr_posy_lo:  .byte $0E,$26,$3E,$56,$6E,$86,$9E,$B6,$CE,$E6,  $FE,$16,$2E,$46,$5E,$76,$8E,$A6,$BE,$D6
 ;                                                                    ; digit 0-B hi=0, C-19 hi=1
 ;====================================
-VERA_addr_to_cursorZ:
-   stz VERA_ctrl
-   lda #$01  ; stride =0
-   sta VERA_addr_bank
-   lda #$FD
-   sta VERA_addr_high
-   lda #$F6  ;+6 = +6
-   sta VERA_addr_low
-   ;
-   lda #$01
-   sta VERA_ctrl
-   lda #$01  ; stride =0
-   sta VERA_addr_bank
-   lda #$FD
-   sta VERA_addr_high
-   lda #$FE  ;+6 = +14
-   sta VERA_addr_low
-   rts
-   ;
-;====================================
 cursor_switchon:
    jsr move_cursor      ; adjust position
    jsr VERA_addr_to_cursorZ

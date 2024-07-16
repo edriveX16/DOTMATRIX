@@ -26,7 +26,7 @@ PRESETS_INC = 1
     ;
 .endmacro
 ;==========================================================================================================
-get_presetcol:  ; only for normal mode
+get_presetcol:  ; only for normal mode 20X10
     lda #<preset_colschemes
     sta ZP_PTR_2
     lda #>preset_colschemes
@@ -68,7 +68,7 @@ get_presetcol:  ; only for normal mode
     ;
     rts
 ;=====================
-get_h_presetcols:
+get_h_presetcols:   ; only for half mode 40X20
     lda #<hpreset_colschemes
     sta ZP_PTR_2
     lda #>hpreset_colschemes
@@ -100,6 +100,10 @@ get_h_presetcols:
     ;
     rts
 ;=========================================
+; Remember the page settings so that you can compare them with the new settings when changing pages.
+; If the mode does not change and the background color remains the same,
+; layer1 does not need to be redrawn when the page is changed.
+; Which reduces flickering (and is faster).
 memorize_prevmode:
     lda half_mode
     sta previous_mode
@@ -124,10 +128,10 @@ check_refreshmode:
     bne @ref_all
     ;
 @ref_txt:
-    smb0 textrefresh
+    smb0 textrefresh    ; only redraw text pattern tiles in layer 0
     rts
 @ref_all:
-    smb1 mode_last_run ; lda #$02
+    smb1 mode_last_run ; forces both layers to be redrawn
     rts
 ;=========================================
 ; store page settings behind text RAM area
@@ -149,7 +153,7 @@ save_page_settings:
 ; Byte 11- 17: half_fg index offset, spare $00!, hlite_col L0 tilebase, spare $00!, cursor SPR# (lower part of Vaddr), vline SPR# (lower part of Vaddr), spare $00
     bbs0 half_mode, @save_half
     ;
-;normal
+; values for normal mode 20x10
     lda #$00
     sta (ZP_PTR_5),y    ; mode
     iny
@@ -187,7 +191,7 @@ save_page_settings:
     lda X16logo_on
     sta (ZP_PTR_5),y
     rts
-;========= save im half mode
+;========= save values in half mode 40x20
 @save_half:
     lda #$01
     sta (ZP_PTR_5),y    ;mode
@@ -233,7 +237,7 @@ restore_page_settings:
     bne @load_half
 ;normal
     stz half_mode
-    iny     ; von mode
+    iny     ; from mode
     ;
     lda (ZP_PTR_5),y
     sta npreset
@@ -262,7 +266,6 @@ restore_page_settings:
     adc cheat_litecol
     sta cheat_col
     ;
-;    jsr VERA_addr_to_cursorSPR
     jsr VERA_addr_to_both_cursorSPR
     lda (ZP_PTR_5),y
     sta VERA_data0

@@ -25,7 +25,7 @@ itxt2:  ; scrolltext...
 .byte $65,$6E,$74,$65,$72, $20,$32,$30,$2A,$31
 .byte $30,$20,$6D,$6F,$64, $65,$20,$2B,$2B,$2B
 .byte $20,$20,$00,$00,$00, $00,$00,$00,$00,$00
-; 13 zeilen @ 10 chars = d130;
+; 13 lines @ 10 chars = d130;
 ;
 ; ZP_tmp_DATA3 bit7:  1, when upper animation "DOT MATRIX" has completed
 ; ZP_tmp_DATA3 bit6:  1, when lower animation "commander X16" has completed
@@ -41,13 +41,13 @@ make_intro_txt:
     lsr
     sta (ZP_PTR_3),y
     lda #$00
-    sta (ZP_PTR_2),y ; zero rnd robb cnt
+    sta (ZP_PTR_2),y ; zero rnd robin cnt
     iny
     jsr get_rand
     lsr
     sta (ZP_PTR_3),y
     lda #$00
-    sta (ZP_PTR_2),y ; zero rnd robb cnt
+    sta (ZP_PTR_2),y ; zero rnd robin cnt
     iny
     dex
     dex

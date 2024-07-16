@@ -171,7 +171,7 @@ proc_defkeys:
 @F4key:
     cmp #$8A    ; $8A=F4 key: toggles mode
     bne @F5key
-    jsr save_page_settings  ; speichert UND versorgt ZP_PTR_5 mit current_usrtxt pointer
+    jsr save_page_settings  ; saves AND sets ZP_PTR_5 with current_usrtxt pointer
     ldy #$01
     bbs0 half_mode, :+
     lda #$01

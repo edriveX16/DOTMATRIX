@@ -122,17 +122,17 @@ intro_fin:
     stz X16logo_on
     ;
     smb1 mode_last_run          ; froces both layers to be redrawn
-    jsr set_std_IRQVec
+    jsr set_std_IRQVec          ; sets and activates irq handler
     ;
     jsr cursor_home
     jsr cursor_switchon
     ;
     lda menu_mode               ; might be set on intro exit
     beq :+
-    jsr setup_menu
+    jsr setup_menu              ; if so, execute menu directly
     bra main_loop
    :jsr pageSPR_startswipeout
-    ;
+    ;                           ; (continues to main_loop)
 .endmacro
 ;===================================================
 .endif

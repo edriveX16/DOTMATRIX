@@ -11,7 +11,18 @@ set_std_IRQVec:                     ; set standard IRQ handler
     sta VERA_ien
     cli
     rts
-;==================================
+;====================================
+set_page_IRQVec:
+    sei
+    lda #<page_irq_handler
+    sta IRQVec
+    lda #>page_irq_handler
+    sta IRQVec+1
+    lda #VSYNC_BIT ; make VERA only generate VSYNC IRQs
+    sta VERA_ien
+    cli
+    rts
+;====================================
 default_keyvec:
     lda #<proc_defkeys
     sta use_key_vector
@@ -78,9 +89,9 @@ sto_inc_nload_PTR5:
    :lda ZP_PTR_5
     rts
 ;================================
-current_usrtxt_inc:
+current_usrtxt_inc:     ; move current_usrtxt ptr to next page
     lda current_usrtxthi
-    cmp #>usrtxt7
+    cmp #>usrtxt7       ; check for round robin
     bmi @tinc
     lda #>usrtxt0
     sta current_usrtxthi
@@ -92,9 +103,9 @@ current_usrtxt_inc:
     sta current_usrtxthi
     rts
 ;=======================
-current_usrtxt_dec:
+current_usrtxt_dec:     ; move current_usrtxt ptr to previous page
     lda current_usrtxthi
-    cmp #>usrtxt0
+    cmp #>usrtxt0       ; check for round robin
     beq @tdec
     lda current_usrtxthi
     sec
@@ -106,7 +117,7 @@ current_usrtxt_dec:
     sta current_usrtxthi
     rts
 ;==================================
-set_pagesettings_ptr:
+set_pagesettings_ptr:   ; page settings storage starts at end of each text page RAM
     lda #$20
     sta ZP_PTR_5
     clc

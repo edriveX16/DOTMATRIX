@@ -2,8 +2,8 @@
 PATTERN_INC  = 1
 ; pattern to tile lookup table
 ;
-; Pattern encoding: Muster = two 8s tiles only hlaf character, left half
-; untere 6 bit: tilenr.
+; Pattern encoding: Muster = two 8s tiles only half character, left half
+; lower 6 bit: tileno.
 ; bit7: v-flip
 ; bit6: h-flip
 ;===========================
@@ -14,9 +14,9 @@ Muster:
 ;ooo ;Muster 0
 ;ooo
 .byte $00, $00, $00, $00
-; obere reihe
+; upper row
 ; $00, $00
-; untere reihe
+; lower row
 ; $00, $00
 ;
 ;o** ;Muster 1              =*oo   ,if flipped horizontal

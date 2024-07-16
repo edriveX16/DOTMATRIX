@@ -53,6 +53,7 @@ char_VRAM_adr_lo    = $4E
 char_VRAM_adr_hi    = $4F
 ;
 half_mode           = $50  ; 0 = off (=20*10 chars), 1 = half mode (=40*20 chars)
+;zp_crsrstatus       = $51   ; Bit0 = on, 1= auto, (0= auto, 1= allways on),
 crsrstatus       = $51   ; Bit0 = on, 1= auto, (0= auto, 1= allways on),
 row_fill_cnt        = $52   ;.byte $20 CVIDEO_INC
 digit_inc_cnt       = $53 ; ->include file 'cursormove'

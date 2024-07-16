@@ -293,7 +293,7 @@ scopy:
     jsr single_line_cpy
 ; ;==========
 ; @next_line:
-; if there is a next line
+; if there is a next line...
     cmp #$04    ; EOF
     bne :+
     bra @post_text  ; exit on EOF

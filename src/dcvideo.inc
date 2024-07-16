@@ -1,6 +1,12 @@
 .ifndef DCVIDEO_INC
 DCVIDEO_INC  = 1
 ;======================================================
+; functions to switch between both modes 20x10 <-> 40x20
+; In case of a mode change both layers have to be
+; redrawn. Some mandatory values have to be adpoted.
+; During mode change (layer repaint) we disable video output.
+; Otherwise flickering may occur.
+;======================================================
 ;row_fill_cnt:           .byte $20
 ;==========================================
 ; "normal mode" refers to 20*10 character mode

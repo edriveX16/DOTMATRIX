@@ -9,11 +9,12 @@ SOURCES = $(MAIN) \
 	dot_zp.inc \
 	dotsysdeclarations.inc \
 	vectors.inc \
+	vera_helpers.inc \
 	random.inc \
 	textutils3.inc \
-	farben.inc \
+	dotcolors.inc \
 	presets.inc \
-	grafics.inc \
+	create_20x10mode_tilesets.inc \
 	create_crsrsprites.inc \
 	charcodes.inc \
 	pattern.inc \
@@ -25,7 +26,7 @@ SOURCES = $(MAIN) \
 	dotmenukeys.inc \
 	postinsert.inc \
 	dotmenu.inc \
-	halfsize.inc \
+	create_40x20mode_tilesets.inc \
 	info_sprite_tools.inc \
 	create_info_sprites.inc \
 	cursormove.inc \
@@ -42,10 +43,10 @@ $(PROG): $(SOURCES)
 	$(ASSEMBLER6502) $(ASFLAGS) -o $(PROG) $(MAIN)
 
 run: all #resources
-	x16emu -keymap de -rockwell -prg $(PROG) -run
+	x16emu -prg $(PROG) -run
+#	x16emu -keymap de -rockwell -prg $(PROG) -run
 #	x16emu -keymap de -prg $(PROG) -run
 #	x16emu -debug -keymap de -prg $(PROG) -run
-#	x16emu -prg $(PROG) -run
 #	x16emu -scale 2 -prg $(PROG) -run
 
 clean:

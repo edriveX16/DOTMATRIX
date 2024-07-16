@@ -1,5 +1,9 @@
 .ifndef CREATE_INFO_SPRITES_INC
 CREATE_INFO_SPRITES_INC = 1
+;=======================================================================================
+; functions to create these small info-sprites, which are displayed from above on occasion
+; like e.g. 'page 0'...'page 7' or 'sequence start ' etc.
+;=======================================================================================
 ;======================
 ; ZP_PTR_1 source text pointer
 ; ZP_PTR_2 target pointer to VRAM sprite data start to be created

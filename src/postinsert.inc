@@ -6,7 +6,7 @@ POSTINSERT_INC =1
 ;     jsr ins_secnd2systxt              lda secs_onoff      ->post_ins bit5
 ;     jsr insert_insert                 lda ii_on           ->post_ins bit4
 ;================================================
-chrset_inc:             .byte $02   ; normal mode, half mode= $08
+chrset_inc:             .byte $02   ; normal mode= $02, half mode= $08
 single_line_indent:     .byte $00
 secs_line_indent:       .byte $00
 onoff_indent_lo:        .byte $25
@@ -31,9 +31,9 @@ offtxt0:  ; "off"
 .byte $20,$6F,$66,$66
 autotxt0:  ; "auto"
 .byte $61,$75,$74,$6F
-insert0:
+insert0:    ; "overwrite"
 .byte $6F,$76,$65,$72,$77,$72,$69,$74,$65
-insert1:
+insert1:    ; "insert   "
 .byte $69,$6E,$73, $65,$72,$74,$20, $20,$20
 ;time0:
 ;.byte $32,$34,$3A, $30,$30,$3A,$34, $32,$20
@@ -157,7 +157,7 @@ ins_secs2systxt:
     ;
     ldx #$02
 @loop:
-    lda sectxt0+2   ; trd digit
+    lda sectxt0+2   ; third digit
     cmp #$20
     beq @shift2
     bra @write

@@ -8,7 +8,7 @@
 ; each page may be individually set to different colors and mode                ;
 ; features some simple pseudo random generators for garbage text and pattern    ;
 ;                                                                               ;
-; requires a 65C02S CPU: PRG makes use of smbX, rmbx, bbsx, bbrx etc. commands  ;
+; requires a 65C02S CPU: PRG makes use of smbx, rmbx, bbsx, bbrx etc. commands  ;
 ;                                                                               ;
 ;===============================================================================;
 .org $080D
@@ -33,7 +33,7 @@ main_loop:
     sta char_value
     beq main_loop
     jmp(use_key_vector) ; call keyboard routine
-    ; keyb routine may return to main_loop, enter_char, output or reset
+    ; keyb routine may return to 'main_loop', 'enter_char', 'output' or 'reset'
     ; coming back from keyboard routine - ...if so
 enter_char:             ; insert new character to user text
     jsr cursor_switchon ; turn on cursor  - just in case it was off
