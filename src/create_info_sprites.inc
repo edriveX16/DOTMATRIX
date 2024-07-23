@@ -407,7 +407,6 @@ loop_w_one_syscharSPR:
     sta VERA_data0
     ;
     ; next sprite
-    ;lda #<(VRAM_seqinfoSPR >> 5)
     lda #$90        ; hardcoded lo adr
     sta VERA_data0
     lda #>(VRAM_seqinfoSPR >> 5)

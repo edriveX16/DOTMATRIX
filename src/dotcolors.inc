@@ -66,7 +66,7 @@ maxcolframe_cnt:    .byte $40 ; $20 in halfmode
     lda #$20
     sta ZP_PTR_6
     ;
-    jsr set_pagesettings_ptr    ; provides ZP_PTR_5 with actual page
+    jsr set_pagesettings_ptr    ; provides ZP_PTR_5 with currrent page
     ;
     lda #$08
     sta ZP_tmp_DATA
@@ -231,9 +231,8 @@ toggle_crsr_col:
     jmp save_page_settings  ; use rts of save_page_settings
 ;======================
 toggle_hcrsr:
-
-    jsr VERA_addr_to_cursorSPR
-
+    jsr VERA_addr_to_both_cursorSPR
+    ;
     clc
     lda VERA_data0
     adc #$04                ; half mode

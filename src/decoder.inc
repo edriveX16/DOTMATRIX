@@ -15,37 +15,8 @@ set_VERA_addr_2_char:
     lda char_VRAM_adr_lo
     sta VERA_addr_low
     rts
-;
-;==========================
-; WRITE_8z_byte:
-;     stz VERA_data0
-;     stz VERA_data0
-;     stz VERA_data0
-;     stz VERA_data0
-;     stz VERA_data0
-;     stz VERA_data0
-;     stz VERA_data0
-;     stz VERA_data0
-;     rts
-;
-; WRITE_4alternate_byte:
-;     sta VERA_data0
-;     stz VERA_data0
-;     sta VERA_data0
-;     stz VERA_data0
-;     rts
-;
-WRITE_8alternate_byte:
-    sta VERA_data0
-    stz VERA_data0
-    sta VERA_data0
-    stz VERA_data0
-    sta VERA_data0
-    stz VERA_data0
-    sta VERA_data0
-    stz VERA_data0
-    rts
-;
+    ;
+;=========================================================================================
 make_upperlinesubset:    ; preset x before entering: $00 for left half, $02 for right half
     ldy #$00
     bbr6 zp_flips, @tv_flip ; test vertical flip
@@ -97,6 +68,7 @@ make_upperlinesubset:    ; preset x before entering: $00 for left half, $02 for 
     sta char_pat_linesubset,x
     rts
     ;
+;=========================================================================================
 make_lowerlinesubset:    ; preset x before entering: $00 for left half, $02 for right half
     ldy #$02
     bbr6 zp_flips, @tv_flip; bit #$40   ; test vertical flip
@@ -146,7 +118,7 @@ make_lowerlinesubset:    ; preset x before entering: $00 for left half, $02 for 
     sta char_pat_linesubset,x
     rts
     ;
-;=====================================================
+;=========================================================================================
 create_temp_patternpointer:
 ; calculates offset within pattern table "Muster" or "MStR"
 ; saves also flip bits and offset-pointer
@@ -173,8 +145,6 @@ create_temp_patternpointer:
    :rts
     ;
 .macro make_upperlinesub
-; left half
-   ; ldy zp_index
     jsr create_temp_patternpointer
     ldx #$00
     jsr make_upperlinesubset
@@ -252,7 +222,6 @@ make_halflinesub:
     adc ZP_tmp_DATA
     sta VERA_data0 ; Tile index
     ;
-   ; lda char_pattern_set,y
     txa
     and #$C0
     lsr
@@ -270,7 +239,6 @@ make_halflinesub:
     adc ZP_tmp_DATA
     sta VERA_data0 ; Tile index
     ;
-    ;lda char_pattern_set,y
     txa
     and #$C0
     lsr
@@ -430,7 +398,7 @@ write_singlechar:
     ;
     bbs0 half_mode, halfsubs
 ;======================================
-normsubs:
+normsubs:   ; when in 20x10 mode
 ; 2nd part: decode & draw the character
     lda #<Muster
     sta ZP_PTR_9
@@ -457,7 +425,7 @@ normsubs:
 ; lower third done
     rts
     ;
-;@halfsubs:  ; when in half mode
+;@halfsubs:  ; when in half mode 40x20
 halfsubs:
     stz ZP_tmp_DATA
     ldy #$00

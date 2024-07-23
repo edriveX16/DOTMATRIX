@@ -1,17 +1,6 @@
 .ifndef VERA_HELPERS_INC
 VERA_HELPERS_INC  = 1
 ;==================================
-; ggf. ersetzen mit unterer funktion f. beide
-VERA_addr_to_cursorSPR:  ; sets VRAM data pointer to sprite #60 attr low address
-    stz VERA_ctrl
-    lda #$01        ; stride = 0
-    sta VERA_addr_bank
-    lda #$FD
-    sta VERA_addr_high
-    lda #$F0
-    sta VERA_addr_low
-    rts
-    ;
 VERA_addr_to_both_cursorSPR:    ; sets VRAM data pointer 0 to sprite #60 attr low address
     stz VERA_ctrl
     lda #$01        ; stride = 0
@@ -62,7 +51,7 @@ VERA_addr_to_vlineSPR:  ; sets VRAM data pointer 0 to sprite #2 attr low address
     sta VERA_addr_low
     rts
     ;
-VERA_addr_to_vlineDEMOSPR:  ; sets VRAM data pointer 0 to sprite #52 attr low address
+VERA_addr_to_vlineDEMOSPR:  ; sets VRAM data pointer 1 to sprite #52 attr low address
     stz VERA_ctrl
     lda #$01        ; stride = 0
     sta VERA_addr_bank
@@ -127,6 +116,19 @@ WRITE_8_byte:
     sta VERA_data0
     rts
     ;
+;==========================
+WRITE_8alternate_byte:  ; (decoder)
+    sta VERA_data0
+    stz VERA_data0
+    sta VERA_data0
+    stz VERA_data0
+    sta VERA_data0
+    stz VERA_data0
+    sta VERA_data0
+    stz VERA_data0
+    rts
+    ;
+;==========================
 WRITE_16_byte:
     ldy #$10
    :sta VERA_data0  ; write acc2VERA

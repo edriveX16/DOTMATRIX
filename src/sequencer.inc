@@ -192,17 +192,7 @@ seqaniSPR_inc:
     lda #$A0  ; VERA SPR addr lo
     sta VERA_addr_low
     jmp write_seqSPRdat
-;     lda VERA_data0
-;     cmp #$46
-;     bmi :+
-;     lda #$40
-;     sta VERA_data0
-;     rts
-;    :clc
-;     adc #$02
-;     sta VERA_data0
-;     rts
-;====================================
+;=================================
 seqanidemoSPR_inc:
     stz VERA_ctrl
     lda #$01  ; stride =0
@@ -211,6 +201,7 @@ seqanidemoSPR_inc:
     sta VERA_addr_high
     lda #$A8  ; VERA SPR addr lo
     sta VERA_addr_low
+;=================================
 write_seqSPRdat:
     lda VERA_data0
     cmp #$46
@@ -228,7 +219,7 @@ seqSPR_startswipeout:
     stz seqSPR_swipedelay
     jsr seqSPR_swiperesetpos
     jsr seqSPR_switchon
-    jmp seqSPR_swipeout     ; use rts of seqSPR_swipeout
+    ;jmp seqSPR_swipeout     ; use rts of seqSPR_swipeout
     ;
 seqSPR_swipeout:
     lda seqSPR_swiperuns

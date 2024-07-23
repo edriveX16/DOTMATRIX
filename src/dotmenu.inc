@@ -29,7 +29,9 @@ setup_menu:
     jsr vlineDemo_switchoff
     ;
     jsr delete_systxt
-    jsr logo_switchoff
+    stz X16logo_on
+    ;jsr logo_switchoff
+    jsr setlogo
     ;
     stz char_value  ; cancel the character that took us in here
     ;                 might be otherwise processed as next F-key

@@ -1,35 +1,41 @@
  .ifndef LOGO_INC
 LOGO_INC  = 1
 ;===================================================
-logo_righthalfflip: .byte $00
-logo_on:            .byte $00
+; the X16 logo is only available in 20x10 mode
+; it consists of 20 sprites, with the 10 on the right half using the same data as the left half, only mirrored horizontally.
+;===================================================
+logo_SPR_Z_flip: .byte $00
+logo_on:         .byte $00
 ;
 ; logo SPR attribute look up array:
 ;               VRAM_adr_lo, xpos_lo left, right, ypos_lo, ypos_hi, width/height
-logo_attr0:     .byte $00,      $00,    $58,        $C0,    $00,    $00
-logo_attr1:     .byte $02,      $06,    $52,        $C8,    $00,    $00
-logo_attr2:     .byte $04,      $06,    $4A,        $D0,    $00,    $50
-logo_attr3:     .byte $0C,      $16,    $42,        $D0,    $00,    $40
-logo_attr4:     .byte $10,      $0E,    $42,        $E0,    $00,    $10
-logo_attr5:     .byte $14,      $1E,    $32,        $DC,    $00,    $50
-logo_attr6:     .byte $1C,      $1E,    $32,        $F4,    $00,    $50
-logo_attr7:     .byte $24,      $0E,    $42,        $FA,    $00,    $50
-logo_attr8:     .byte $2C,      $0C,    $4C,        $0A,    $01,    $00
-logo_attr9:     .byte $2E,      $06,    $52,        $10,    $01,    $00
+logo_attr0:     .byte $00,      $00,        $58,    $C0,    $00,        $00
+logo_attr1:     .byte $02,      $06,        $52,    $C8,    $00,        $00
+logo_attr2:     .byte $04,      $06,        $4A,    $D0,    $00,        $50
+logo_attr3:     .byte $0C,      $16,        $42,    $D0,    $00,        $40
+logo_attr4:     .byte $10,      $0E,        $42,    $E0,    $00,        $10
+logo_attr5:     .byte $14,      $1E,        $32,    $DC,    $00,        $50
+logo_attr6:     .byte $1C,      $1E,        $32,    $F4,    $00,        $50
+logo_attr7:     .byte $24,      $0E,        $42,    $FA,    $00,        $50
+logo_attr8:     .byte $2C,      $0C,        $4C,    $0A,    $01,        $00
+logo_attr9:     .byte $2E,      $06,        $52,    $10,    $01,        $00
 ;
 ;===================================================
 logo_half:
     ldx #$0A         ; 1st 10 left logo sprites
-    lda logo_righthalfflip
+    lda logo_SPR_Z_flip
    :sta VERA_data0   ; sprite Z
     dex
     bne :-
     rts
+;=======================
 setlogo:
+; turns logo  on or off
     lda X16logo_on
     bne :+
     jmp logo_switchoff
    :jmp logo_switchon
+;=======================
 logo_switchoff:
 ; turns off all 20 logo sprites by setting the Z value
 ; sprites 10 - 20 will also be flipped horizontally
@@ -41,7 +47,7 @@ logo_switchoff:
     lda #$56        ; $50+6
     sta VERA_addr_low
     ;
-    stz logo_righthalfflip
+    stz logo_SPR_Z_flip
     ;
     jsr logo_half
     ;
@@ -59,15 +65,15 @@ logo_switchon:
     sta VERA_addr_high
     lda #$56
     sta VERA_addr_low
-
+    ;
     lda #$08
-    sta logo_righthalfflip
+    sta logo_SPR_Z_flip
     ;
     jsr logo_half
     ;
-    lda logo_righthalfflip
+    lda logo_SPR_Z_flip
     ora #$01
-    sta logo_righthalfflip
+    sta logo_SPR_Z_flip
     ;
     jsr logo_half
     ;
@@ -96,7 +102,7 @@ WRITE_4z_4_8_byte:
     stz VERA_ctrl
     lda #$11   ;stride = 1, start addr: $12000
     sta VERA_addr_bank
-    lda #$20 ;(>VRAM_logo)
+    lda #$20
     sta VERA_addr_high
     stz VERA_addr_low
 ; logoSPR_0 8x8:
@@ -235,9 +241,9 @@ set_logoSPR_half:
     ;
     rts
 ;========================
-; set SPR sttrb. for the 20 X16 logo sprites
+; set SPR attrb. for the 20 X16 logo sprites
 ; logo spr attrb. registers start @ 1FC50
-.macro set_logoSPR
+.macro set_logoSPR  ; run only once at program init
     stz ZP_tmp_DATA ; selects left (0..9) or right half (10..19) logo sprites
     lda #<logo_attr0
     sta ZP_PTR_4

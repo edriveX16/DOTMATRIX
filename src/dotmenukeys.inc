@@ -416,9 +416,6 @@ proc_menu9keys:                     ; random menu
     cmp #$16    ; $16=F11 key:      randomize everything
     bne @keyend
     jsr memorize_prevmode
-    stz patonly
-    stz charonly
-    stz ftype
     jsr all_pg_random_something
     jsr random_allpreset
     jsr restore_page_settings
@@ -431,7 +428,7 @@ proc_menu9keys:                     ; random menu
     jmp output
 @keyend:
     jmp main_loop
-;=============================
+;=============================  11
 proc_menuBkeys:                 ; color menu
     lda char_value
     cmp #$1B    ; $1B=ESC key:  ; close menu
@@ -511,10 +508,7 @@ proc_menuAkeys: ; cursor menu
     sta ins_mode
     jsr move_cursor
     jsr cursor_switchon
-;    jsr ins_insert2systxt
-    ;jmp output
     bra @out
-
 @F1key:
     cmp #$85    ; $85=F1 key:   F1 help menu
     bne @F8key

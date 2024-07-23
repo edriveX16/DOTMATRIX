@@ -57,7 +57,7 @@ cont_fromseqirq:
     inc ticks
 @endtiming:
     lda menu_mode   ; don't do cursor (moves) when in menu
-    bne @chk_halfmode;@checktxtonly;@newcrsrpos_done
+    bne @chk_halfmode
     bbs0 seq_statusbits, @newcrsrpos_done   ; don't do cursor (moves) when sequence runs
     ;
     lda req_crsrmove

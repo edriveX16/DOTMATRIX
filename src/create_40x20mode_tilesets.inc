@@ -1,5 +1,5 @@
-.ifndef HALFSIZE_INC
-HALFSIZE_INC  = 1
+.ifndef CREATE_40X20MODE_TILESETS_INC
+CREATE_40X20MODE_TILESETS_INC = 1
 ;=============================================================================
 ; functions to create tiles for both layers in 'half' mode 40x20
 ;=============================================================================
@@ -8,38 +8,7 @@ pb_ul:      .byte $00   ; pattern def byte upper left
 pb_ur:      .byte $00   ; pattern def byte upper right
 pb_ll:      .byte $00   ; pattern def byte lower left
 pb_lr:      .byte $00   ; pattern def byte lower right
-;
 ;=================================================
-; sets all pages to half mode
-set_allpages2half_mode:
-    lda #$07
-    sta ZP_tmp_DATA
-    ;
-    lda current_usrtxtlo;
-    sta ZP_PTR_5
-    lda current_usrtxthi
-    sta ZP_PTR_5+1
-    lda #$01
-    tax
-    jsr set_pagesettings_ptr
-    ldy #$01            ; byte0=seq_steptime, byte1= mode
-    ;
-    txa
-    sta (ZP_PTR_5),y    ; mode
-    ;
-@stah_loop:
-    clc
-    lda ZP_PTR_5+1
-    adc #$04
-    sta ZP_PTR_5+1
-    txa
-    sta (ZP_PTR_5),y    ; mode
-    ;
-    dec ZP_tmp_DATA
-    bne @stah_loop
-   ;
-    rts
-;==========================================
 WRITE_0011:
     lda litebg_col
     sta VERA_data0

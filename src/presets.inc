@@ -27,12 +27,12 @@ PRESETS_INC = 1
 .endmacro
 ;==========================================================================================================
 get_presetcol:  ; only for normal mode 20X10
-    lda #<preset_colschemes
+    lda #<preset_colschemes     ; look up table
     sta ZP_PTR_2
     lda #>preset_colschemes
     sta ZP_PTR_2+1
     ;
-    ldy npreset
+    ldy npreset         ; preset number for 20x10 mode
     ;
     lda (ZP_PTR_2),y
     sta cheat_colframe
@@ -74,7 +74,7 @@ get_h_presetcols:   ; only for half mode 40X20
     lda #>hpreset_colschemes
     sta ZP_PTR_2+1
     ;
-    ldy hpreset
+    ldy hpreset         ; preset number for 40x20 mode
     ;
     lda (ZP_PTR_2),y
     sta halfc_frame
@@ -90,7 +90,7 @@ get_h_presetcols:   ; only for half mode 40X20
     lda (ZP_PTR_2),y    ; $00 ommit anyway, cheat_col should be $00 in half_mode
     iny
     ;
-    jsr VERA_addr_to_cursorSPR
+    jsr VERA_addr_to_both_cursorSPR
     lda (ZP_PTR_2),y
     sta VERA_data0
     iny
@@ -179,7 +179,7 @@ save_page_settings:
     sta (ZP_PTR_5),y
     iny
     ;
-    jsr VERA_addr_to_cursorSPR
+    jsr VERA_addr_to_both_cursorSPR
     lda VERA_data0
     sta (ZP_PTR_5),y
     iny
@@ -208,13 +208,13 @@ save_page_settings:
     ;
     iny     ; spare $00!
     ;
-    lda VERA_L0_tilebase    ; ! tilebase in half_mode !
+    lda VERA_L0_tilebase    ; ! tilebase in 40x20 mode !
     sta (ZP_PTR_5),y
     iny
     ;
     iny     ; spare $00!
     ;
-    jsr VERA_addr_to_cursorSPR
+    jsr VERA_addr_to_both_cursorSPR
     lda VERA_data0
     sta (ZP_PTR_5),y
     iny
@@ -298,12 +298,12 @@ restore_page_settings:
     iny ; spare
     ;
     lda (ZP_PTR_5),y
-    sta VERA_L0_tilebase    ; ! tilebase in half_mode !
+    sta VERA_L0_tilebase    ; ! tilebase in 40x20 mode !
     iny
     ;
     iny ; spare
     ;
-    jsr VERA_addr_to_cursorSPR
+    jsr VERA_addr_to_both_cursorSPR
     lda (ZP_PTR_5),y
     sta VERA_data0
     iny

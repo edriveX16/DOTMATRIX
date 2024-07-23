@@ -1,6 +1,10 @@
 .ifndef CURSORMOVE_INC
 CURSORMOVE_INC  = 1
-;
+;==========================================================================================
+; some functions for moving the cursor
+; switching the cursor on / off
+; further function applie to the "erase line" aka vline
+;==========================================================================================
 ; joystick_state:      .byte $00
 ; joystick_latch:      .byte $CF
 ; line_SPR_xposlo:        .byte $00
@@ -87,7 +91,7 @@ cursor_home:
 ;==============================================================
 move_cursor:
    stz VERA_ctrl
-   lda #$11    ; VRAM_sprattr = $1FD00
+   lda #$11    ; sprite #60
    sta VERA_addr_bank
    lda #$FD
    sta VERA_addr_high
@@ -95,10 +99,10 @@ move_cursor:
    sta VERA_addr_low
    ;
    bbs0 half_mode, @move_hcursor
-
+   ; 2nd cursor sprite #61 only in normal mode 20x10
    lda #$01
    sta VERA_ctrl
-   lda #$11    ; VRAM_sprattr = $1FD08
+   lda #$11    ; sprite #61
    sta VERA_addr_bank
    lda #$FD
    sta VERA_addr_high
@@ -204,17 +208,12 @@ move_cursor:
    ;cmp #$0B
    bmi :+      ; smaller than 10  -> hi 0
    inx
-
    bra :++
-
- ; :lda crsr_posy
+   ;
   :tya
    cmp #$0B
-   ;cmp #$0B
    bmi :+      ; smaller than 10  -> hi 0
    inx
-
-
   :lda ins_mode
    bne :+
    ;
@@ -222,7 +221,6 @@ move_cursor:
    sta ZP_PTR_2
    lda #>h_ov_crspr_posy_lo
    sta ZP_PTR_2+1
-   ;
    bra :++
    ;
   :lda #<hcrspr_posy_lo  ; start of look up array

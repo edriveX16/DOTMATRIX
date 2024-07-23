@@ -5,13 +5,13 @@ DOTINTRO_INC = 1
 ;   intro has it's own main loop + irg routine      ;
 ;   called as sub routine                           ;
 ;===================================================;
-itxt0:  ; "commander X16"
+intro_txt0:  ; "commander X16"
 .byte $63,$6F,$6D,$6D,$61, $6E,$64,$65,$72,$20
 .byte $58,$31,$36,$20,$00
-itxt1:  ; "DOT MATRIX"
+intro_txt1:  ; "DOT MATRIX"
 .byte $44,$4F,$54,$20,$4D, $41,$54,$52,$49,$58
 .byte $00,$00,$00,$00,$00
-itxt2:  ; scrolltext...
+intro_txt2:  ; scrolltext...
 .byte $20,$2B,$2B,$2B,$20, $46,$34,$3A,$20,$65
 .byte $6E,$74,$65,$72,$20, $34,$30,$2A,$32,$30
 .byte $20,$6D,$6F,$64,$65, $20,$2B,$2B,$2B,$20
@@ -68,7 +68,7 @@ make_intro_txt:
     ;
     ldx #$80                ; copy 128 byte
     ldy #$00
-   :lda itxt2,y
+   :lda intro_txt2,y
     sta (ZP_PTR_1),y    ; target
     iny
     dex
@@ -78,7 +78,7 @@ make_intro_txt:
 .endmacro
 ;========================
 .macro pop_ilayer1  ; similar like 'populate_layer1' used for only partial tile fill
-                    ; other than done with setup routine
+                    ; other than done with setup routine in 'dcvideo.inc'
 ; layer 1 map uses 16x16pix @8bpp tiles, map size is 64x32 tiles in normal mode
     stz VERA_ctrl
     lda #$10        ; stride = 1
@@ -105,27 +105,26 @@ make_intro_txt:
     jsr write_singlechar
 .endmacro
 ;===========================================================
-; ZP_PTR_3 actual systext written
+; ZP_PTR_3 current systext written
 ; ZP_PTR_1 compare text
 ; ZP_PTR_2 round robin counters
 ;
-; systxt0 wird mit in den ersten 16 byte  mit zufalss zahlen belegt, dient als ausgabe für animation
-; systxt0 + $0100 = round robin zähler
-; systxt0 + $0200 ff = scrolltext
+; systxt0 initially assigned 16 bytes of random numbers, serves as the starting point for the animation text
+; systxt0 + $0100 = round robin counter
+; systxt0 + $0200 et seq. = scrolltext
 ;===========================================================
 start_intro:
     ;
-    lda #$1E    ;rot auf sw
+    lda #$1E    ; red on black
     sta npreset  ; attention: preset counts in steps of $06 only
     jsr get_presetcol
-    jsr set_normal_mode
+    jsr set_20x10_mode
     ;
 restart_intro:
     stz scroll_strt_delay
     stz logo_strt_delay
     stz ZP_tmp_DATA3    ; bit 7 = upper animation done, bit 6 = lower animation done
     jsr logo_switchoff
-
     jsr cursor_switchoff
     jsr delete_systxt
     jsr write_txtpage
@@ -141,7 +140,7 @@ restart_intro:
     sta ZP_PTR_3+1
     clc
     adc #$01
-    sta ZP_PTR_2+1  ; rnd robb cnt $100 offset in systext
+    sta ZP_PTR_2+1  ; rnd rob cnt $100 offset in systext
     ;
     jsr make_intro_txt
     ;
@@ -175,9 +174,9 @@ restart_intro:
 ;@F4key:
    :cmp #$8A    ; $8A=F4 key: enter 40*20 mode
     bne @anykey
-    jsr set_allpages2half_mode
+    jsr set_allpages2_40x20_mode
 @anykey:
-    jsr logo_switchoff
+;   jsr logo_switchoff ;<- will be handled by the next page setup anyway
     rts
 ;=========================================================================
 ; irq routines:
@@ -321,9 +320,9 @@ intro_irq_handler:
     lda #$20                    ; lo+$08 = digit offset
     sta Z_index
     stz ZP_tmp_DATA
-    lda #<itxt1
+    lda #<intro_txt1            ; "DOT MATRIX"
     sta ZP_PTR_5
-    lda #>itxt1
+    lda #>intro_txt1
     sta ZP_PTR_5+1
     lda #$0A
     sta ZP_tmp_DATA2    ; loop cnt
@@ -353,9 +352,9 @@ intro_irq_handler:
     lda #$18
     sta Z_index
     stz ZP_tmp_DATA     ; y-reg ersatz
-    lda #<itxt0
+    lda #<intro_txt0    ; "commander X16"
     sta ZP_PTR_5
-    lda #>itxt0
+    lda #>intro_txt0
     sta ZP_PTR_5+1
     lda #$0D
     sta ZP_tmp_DATA2    ; loop cnt

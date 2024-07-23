@@ -2,11 +2,12 @@
 RANDOM_INC = 1
 ;==================================================================
 oldpreset:      .byte $00
-memactpg_hi:    .byte $00
+mem_pg_hi:    .byte $00
 ftype:          .byte $00
 charonly:       .byte $00
 patonly:        .byte $00
 nocx16:         .byte $00
+; some magic numbers for random initialization
 magic_nr0:      .byte $00,$2d   ;$002d
 magic_nr1:      .byte $08,$FB   ;$08fb
 magic_nr2:      .byte $20,$8F   ;$208f
@@ -18,18 +19,21 @@ magic_nr7:      .byte $FC,$0F   ;$fc0f
 magic_hi:       .byte $00
 magic_lo:       .byte $00
 ;================================
+; random patterns are generated from a set of 4 characters
+; there are 8 char. sets for pattern gerneration to choose from
 ; diagonal
 pattern0: .byte $2F,$87,$2F,$87 ;/,\,$5F_,\
-pattern1: .byte $20,$60,$20,$87 ;spc,\oben kurz, spc,\
+pattern1: .byte $20,$60,$20,$87 ;spc,\ "short backspace", spc,\
 pattern2: .byte $3C,$3E,$2F,$87 ;<,>,/,\
-pattern3: .byte $20,$85,$6F,$87 ;spc,dicker punkt mitte unten,o,\
+pattern3: .byte $20,$85,$6F,$87 ;spc, . "big dot at bottom",o,\
 ; straight
-pattern4: .byte $5F,$20,$83,$82    ; _ unten, spc, box,oben und unten
-pattern5: .byte $20,$2D,$83,$82    ; spc, - , box, oben und unten
-pattern6: .byte $7C,$2D,$82,$86    ;| trenner senkrecht mitte,- $2D= minus(lang),oben und unten querstrich,| ganz links
-pattern7: .byte $7C,$20,$83,$2D    ;| trenner senkrecht mitte,spc,box, -
+pattern4: .byte $5F,$20,$83,$82    ; _ under score, spc, box, dash on top and bottom
+pattern5: .byte $20,$2D,$83,$82    ; spc, - , box, dash on top and bottom
+pattern6: .byte $7C,$2D,$82,$86    ;| vertical divider,- middle dash, dash on top and bottom,| pipe symbol
+pattern7: .byte $7C,$20,$83,$2D    ;| vertical divider,spc,box, -
 ;================================
-; set initial seed for random generator below
+; The program uses both a simple 8-bit and a 16-bit pseudo-random generator
+; set initial seed for 8-Bit random generator below
 init_rnd:
     jsr clock_get_date_time
     lda r2H     ; secs
@@ -54,6 +58,7 @@ get_rand:
    :sta rnd_seed
     rts
 ;==================================
+; set initial seed for 16-Bit random generator below
 init16bitrandom:
     lda #<magic_nr0
     sta ZP_PTR_2
@@ -95,14 +100,13 @@ get16bitrnd:
     asl
     beq @noEor ; if $00 is left after the shift, then it was $80
     bcs @doEor ; else, do the EOR based on the carry bit as usual
-    ;bra doEor ; else, do the EOR based on the carry bit as usual
 @noEor:
     sta rnd3_seed
     rts
 ;==================================
 ins_cx16_atrand_pos:
-    ldx #<itxt0
-    ldy #>itxt0
+    ldx #<intro_txt0    ; declared and defined in 'dotintro.inc'
+    ldy #>intro_txt0    ; "commander X16"
     jsr set_PTR_1
     ;
     lda ZP_PTR_6+1
@@ -296,15 +300,18 @@ next_rndp:
 @fertig:
     rts
 ;===========================================
-all_pg_random_something:    ; preload DATA3 with function
+all_pg_random_something:
+    stz patonly
+    stz charonly
+    stz ftype
     stz ZP_PTR_6
     lda #>usrtxt0;
     sta ZP_PTR_6+1
     jsr get16bitrnd
     lda rnd2_seed
-    sta ZP_tmp_DATA3
+    sta ZP_tmp_DATA3    ; preload DATA3 with random function
     ;
-    lda #$08
+    lda #$08            ; 8 pages to randomize
     sta ZP_tmp_DATA2
 @apr_loop:
     stz ZP_PTR_5
@@ -316,7 +323,7 @@ all_pg_random_something:    ; preload DATA3 with function
     ;
     lda ftype
     bne @rndtxt
-    jsr sel_pattype ; proceeds to next_rndp
+    jsr sel_pattype     ; proceeds to next_rndp
     bra @rndinc
 @rndtxt:
     jsr next_rnd
@@ -402,7 +409,7 @@ random_preset:
 ;============================================
 random_allpreset:
     lda current_usrtxthi
-    sta memactpg_hi
+    sta mem_pg_hi
     lda #>usrtxt0;
     sta current_usrtxthi
     stz current_usrtxtlo
@@ -415,7 +422,7 @@ random_allpreset:
     dex
     bne :-
     stz current_usrtxtlo
-    lda memactpg_hi
+    lda mem_pg_hi
     sta current_usrtxthi
     rts
 ;==========================

@@ -2,7 +2,7 @@
 PATTERN_INC  = 1
 ; pattern to tile lookup table
 ;
-; Pattern encoding: Muster = two 8s tiles only half character, left half
+; Pattern encoding: Muster = four 8s tiles only half character, left half
 ; lower 6 bit: tileno.
 ; bit7: v-flip
 ; bit6: h-flip

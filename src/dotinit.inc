@@ -118,10 +118,10 @@ intro_fin:
     jsr init16bitrandom         ; since intro features also evertick
     jsr restore_page_settings   ; after intro might messed up values
     jsr load_file               ; try to load or create "DOTTEXT.TXT"
-    stz logo_on
-    stz X16logo_on
+;    stz logo_on
+;    stz X16logo_on
     ;
-    smb1 mode_last_run          ; froces both layers to be redrawn
+    smb1 mode_last_run          ; forces both layers to be redrawn
     jsr set_std_IRQVec          ; sets and activates irq handler
     ;
     jsr cursor_home

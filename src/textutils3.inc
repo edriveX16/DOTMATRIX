@@ -111,7 +111,7 @@ delete_allusrtxt:
     bne @ini_loop
 .endmacro
 ;===========================================
-i_onepagesettings:
+i_onepagesetting:
     smb0 half_mode
     stz hpreset
     jsr get_h_presetcols
@@ -128,16 +128,16 @@ init_pagesettings:
     lda #>usrtxt0
     sta current_usrtxthi
     ;
-    jsr i_onepagesettings
+    jsr i_onepagesetting
     ;
     ldx #$07
    :jsr current_usrtxt_inc
-    jsr i_onepagesettings
+    jsr i_onepagesetting
     ;
     dex
     bne :-
     ;
-    ; exit with usrtxt0 being the actual one
+    ; exit with usrtxt0 being the current one
     lda #<usrtxt0
     sta current_usrtxtlo
     lda #>usrtxt0
@@ -209,7 +209,7 @@ shift_right_txtRAM:  ; shifts text 2 right
 ;     lda #>systxt0
 ;     sta ZP_PTR_4+1
 ;     bra char_2_tRAM
-char_2_txtRAM:  ; writes character into actual usertextRAM
+char_2_txtRAM:  ; writes character into current usertextRAM
     lda current_usrtxtlo
     sta ZP_PTR_4        ; ZP_PTR_4 can't be used otherwise insert won't work
     lda current_usrtxthi
@@ -276,7 +276,7 @@ save_file:
     sta ZP_PTR_4
     adc #$20
     tax
-    ; Achtung kein bcc abgefragt! geht hier weil bekannt, dass Adresse auf 00en endet.
+    ; Remark: No bcc evaluated, works due to address is know to end on $00
     lda current_usrtxthi
     sta ZP_PTR_4+1
     adc #$03        ; $0320 = d800 = 40*20

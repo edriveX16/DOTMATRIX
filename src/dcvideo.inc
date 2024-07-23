@@ -7,13 +7,13 @@ DCVIDEO_INC  = 1
 ; During mode change (layer repaint) we disable video output.
 ; Otherwise flickering may occur.
 ;======================================================
-;row_fill_cnt:           .byte $20
+; row_fill_cnt:           .byte $20
 ;==========================================
 ; "normal mode" refers to 20*10 character mode
 ; "half mode"   refers to 40*20 character mode
 ;==========================================
 ; set mandatory mode depeinding values:
-.macro set_normalmode_values        ; values for 20*10 char mode
+.macro set_20x10_mode_values        ; values for 20*10 char mode
     lda #$08
     sta colframe_inc
     lda #$40
@@ -38,7 +38,7 @@ DCVIDEO_INC  = 1
     sta crsr_wait_time
 .endmacro
 ;==========================================
-.macro set_halfmode_values          ; values for 40*20 char mode
+.macro set_40x20_mode_values          ; values for 40*20 char mode
     lda #$02
     sta colframe_inc
     lda #$11
@@ -62,16 +62,40 @@ DCVIDEO_INC  = 1
     lda #$04
     sta crsr_wait_time
     ;
-    stz X16logo_on      ; no logo availiable in 40*20 mode
-    jsr logo_switchoff
+    stz X16logo_on      ; no logo available in 40*20 mode
     ;
 .endmacro
 ;==========================================
 get_mode_values:
     bbr0 half_mode, :+
-    set_halfmode_values
+    set_40x20_mode_values
     rts
-   :set_normalmode_values
+   :set_20x10_mode_values
+    rts
+;===================================================
+; sets all pages to 40x20 mode, may be used by intro
+set_allpages2_40x20_mode:
+    lda #$07
+    sta ZP_tmp_DATA
+    ;
+    jsr set_pagesettings_ptr ; current_usrtxthi/lo must be valid here
+    ldy #$01            ; byte0=seq_steptime, byte1= mode
+    ;
+    ldx #$01
+    txa
+    sta (ZP_PTR_5),y    ; mode
+    ;
+@setall40_loop:
+    clc
+    lda ZP_PTR_5+1
+    adc #$04
+    sta ZP_PTR_5+1
+    txa
+    sta (ZP_PTR_5),y    ; mode
+    ;
+    dec ZP_tmp_DATA
+    bne @setall40_loop
+    ;
     rts
 ;==========================================
 ;====================================================== populate layer 0 map
@@ -166,12 +190,12 @@ populate_layer1:
 ;=================================================  set video and layer modes
 set_mode:
     stz VERA_dc_video   ; disable display during changing layer modes and redrawing everything
-    bbs0 half_mode, set_half_mode
+    bbs0 half_mode, set_40x20_mode
 ;=================================================
-set_normal_mode:    ; also used by intro
+set_20x10_mode:    ; also used by intro
     jsr get_mode_values
     ;
-    stz VERA_ctrl   ; set sprite attr to cursor sprite #1
+    stz VERA_ctrl   ; set sprite attr to cursor sprite #60
     lda #$11        ; stride = 1
     sta VERA_addr_bank
     lda #$FD
@@ -180,7 +204,7 @@ set_normal_mode:    ; also used by intro
     sta VERA_addr_low
     ;
     lda #$01
-    sta VERA_ctrl   ; set sprite attr to cursor sprite #1
+    sta VERA_ctrl   ; set sprite attr to cursor sprite #61
     lda #$11        ; stride = 1
     sta VERA_addr_bank
     lda #$FD
@@ -193,7 +217,7 @@ set_normal_mode:    ; also used by intro
     ; because of the stride we get one byte further
     ; but the first address byte of the sprite is read like this
     ; only read? Dto. half_mode see below.
-    lda VERA_data0      ; lda #<(VRAM_cursor >> 5)
+    lda VERA_data0
     lda VERA_data1
     ;
     ;
@@ -236,11 +260,11 @@ set_normal_mode:    ; also used by intro
     ;
     bra set_video
 ;=======================================================
-set_half_mode:
+set_40x20_mode:
     jsr logo_switchoff
     ;
     jsr get_mode_values
-    ; set sprite attr to cursor sprite #1
+    ; set sprite attr to cursor sprite #60
     stz VERA_ctrl
     lda #$11        ;stride = 1
     sta VERA_addr_bank

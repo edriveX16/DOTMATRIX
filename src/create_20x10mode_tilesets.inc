@@ -1,8 +1,5 @@
-;.ifndef GRAFICS_INC
 .ifndef CREATE_20X10MODE_TILESETS_INC
-;GRAFICS_INC  = 1
 CREATE_20X10MODE_TILESETS_INC = 1
-;.include "farben.inc"
 .include "dotcolors.inc"
 .include "presets.inc"
 ;===========================================================================
@@ -14,7 +11,7 @@ frame_col:              .byte $00
 framebg_col:            .byte $51
 corner_col:             .byte $51
 ;
-cheat_litecol:          .byte $E0   ; refers to a tile offset in VRAM
+cheat_litecol:          .byte $E0   ; refers to a tile data offset in VRAM
 cheat_litebgcol:        .byte $10
 cheat_colframe:         .byte $18
 cheat_stylframe:        .byte $00
