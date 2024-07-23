@@ -17,10 +17,12 @@ works with ROM #R47 (other ROM versions untested)
 
 ============================================================================
 
-
 Lastest update:
+July, 23rd, 24:
 
+Minor code clean up (mainly on naming/wording, comments)
 
+============================================================================
 July, 16th, 24:
 
 Added basic documentation on operation.
