@@ -294,7 +294,7 @@ F7: Generate random pattern on the current page.
 
 F8: Generate random pattern on all pages.
 
-Note: F5 - F7 don't change the mode or color settings.
+Note: F5 - F8 don't change the mode or color settings.
 
 F9: Randomize the used color preset and mode (20x10 or 40x20) of the current page.
 
