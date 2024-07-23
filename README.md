@@ -1,5 +1,5 @@
 # DOT MATRIX version 9 for the Commander X16
-
+![intro screen](screenshots/Intro_Screen.png)
 - turns the X16 screen into a 5x7 dots per character display
 
 - supports 2 modes with 20x10 or 40x20 characters per screen
